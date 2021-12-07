@@ -1,0 +1,7 @@
+{
+  "uris": {
+    "baseuri": "SYNAPSE_DYNAMIC_URI"
+  },
+  "enablelogging": true,
+  "prodbuild": true
+}

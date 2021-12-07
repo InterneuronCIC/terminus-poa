@@ -1,0 +1,13 @@
+{
+  "uris": {
+    "baseuri": "SYNAPSE_DYNAMIC_URI",
+    "carerecorduri": "CARERECORD_URI",
+    "terminologyuri": "TERMINOLOGY_URI/api/terminology/searchsnomed/VALUE",
+    "autonomicuri": "AUTONOMIC_URI",
+    "imageserveruri": "IMAGESERVER/",
+    "identityserveruri": "SYNAPSE_IDENTITY_URI",
+    "currentmedsmoduleuri": "CURRENTMEDS/"
+  },
+  "enablelogging": true,
+  "prodbuild": true
+}

@@ -1,0 +1,477 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="modal-header bg-info text-white">
+  <h5 class="modal-title">
+    <fa name="check-square"></fa> Audit History
+    <!-- - {{ title }} -->
+  </h5>
+
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <span class="text-dark">
+
+    <!-- {{ message }} -->
+    <div *ngIf="historyView == 'form'">
+      <div *ngIf="selectedPOA">
+        <div class="alert alert-info">
+          <div class="row">
+            <div class="col-md-2">
+              <button class="btn btn-info text-white" (click)="backToList()">
+                <fa name="chevron-left"></fa> Back
+              </button>
+            </div>
+            <div class="col-md-5">
+              <strong>Timestamp</strong><br />
+              {{selectedPOA._createddate | date:'dd/MM/yyyy HH:mm'}}
+            </div>
+            <div class="col-md-5">
+              <strong>User</strong><br />
+              <span *ngIf="selectedPOA._createdby"> {{ selectedPOA._createdby }} </span>
+              <span *ngIf="!selectedPOA._createdby"> Dev User </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngIf="historyView == 'list'">
+      <div *ngIf="historyList">
+        <ul class="list-group" *ngFor="let opt of historyList">
+          <li class="list-group-item list-group-item-action" (click)="viewHistoryForm(opt)">
+            <div style="padding:5px;">
+              <div class="row">
+                <div class="col-md-6">
+                  {{opt._createddate | date:'dd/MM/yyyy HH:mm'}}
+                </div>
+                <div class="col-md-5">
+                  <span *ngIf="opt._createdby"> {{ opt._createdby }} </span>
+                  <span *ngIf="!opt._createdby"> Dev User </span>
+                </div>
+                <!-- <div class="col-md-4">
+                <strong>Assigned to</strong><br />
+                {{opt.assignedto}}
+              </div> -->
+                <div class="col-md-1" style="padding-top:2px;">
+                  <span class="float-right text-dark">
+                    <fa name="arrow-right"></fa>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div *ngIf="historyView == 'form'">
+
+
+      <div class="card">
+        <div class="card-header bg-secondary text-dark">
+          <div class="row">
+            <div class="col-md-6">
+              <h5>
+                General
+              </h5>
+
+            </div>
+            <div class="col-md-6">
+              <!-- <button class="btn btn-info float-right text-white" (click)="viewHistory()"
+                style="margin-left: 7px; margin-right: 7px;">
+                <fa name="check-square"></fa> Audit
+              </button> -->
+              <!-- <button class="btn btn-info float-right text-white" (click)="viewPrevious()">
+                <fa name="clock-o"></fa> Previous POAs
+              </button> -->
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div *ngIf="selectedPOA">
+            <form #assessmentForm="ngForm">
+
+              <div class="form-group">
+                <label for="poastatus">Status:</label>
+                <select name="poastatus" id="poastatus" class="form-control" [(ngModel)]="selectedPOA.poastatus"
+                  disabled #poastatus="ngModel">
+                  <!-- <option *ngFor="let opt of staffGroups" value="{{ opt.poa_staffgroup_id }}">
+                  {{ opt.groupname }}
+                </option> -->
+                  <option value="In Progress">In Progress</option>
+                  <option value="Complete - Fit to proceed">Complete - Fit to proceeed</option>
+                  <option value="Complete - Unfit to proceed">Complete - Unfit to proceeed</option>
+                  <option value="Invalidated">Invalidated - Entered in error</option>
+                  <option value="Please see anaesthetic ePOA – only baseline observations  recorded on this document">
+                    Please
+                    see anaesthetic ePOA – only baseline observations recorded on this document</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="poatype">Type:</label>
+                <select name="poatype" id="poatype" class="form-control" [(ngModel)]="selectedPOA.poatype" disabled
+                  #poatype="ngModel">
+                  <!-- <option *ngFor="let opt of staffGroups" value="{{ opt.poa_staffgroup_id }}">
+                  {{ opt.groupname }}
+                </option> -->
+                  <option value="Face to face assessment">Face to face assessment</option>
+                  <option value="Telephone assessment only">Telephone assessment only</option>
+                  <option value="Telephone assessment plus walk-in/ HCAH (Healthcare at home)">Telephone assessment plus
+                    walk-in/ HCAH (Healthcare at home)</option>
+                </select>
+
+              </div>
+
+
+              <div class="form-group">
+                <label for="poadate">Assessment Date:</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                    disabled id="poadate" name="poadate" #poadate="ngModel" [(ngModel)]="selectedPOA.poadate"
+                    [bsConfig]="bsConfig" aria-describedby="poadate" required />
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="poatype">Linked TCI / Encounter:</label>
+                <select name="linkedencounterid" id="linkedencounterid" class="form-control" disabled
+                  [(ngModel)]="selectedPOA.linkedencounterid" #linkedencounterid="ngModel"
+                  (change)="GetLinkedEncounter();">
+                  <option value=null>
+                    Please select linked TCI / Encounter
+                  </option>
+                  <option *ngFor="let opt of linkedEncounterList" value="{{ opt.encounter_id }}">
+                    {{ opt.summary }}
+                  </option>
+                </select>
+              </div>
+
+              <div *ngIf="linkedEncounter">
+                <div class="bg-light text-dark border border-secondary rounded"
+                  style="padding:5px; margin-bottom:5px; font-size:0.8em;">
+                  <table class="table table-bordered table-sm">
+                    <thead>
+                      <!-- <tr>
+                        <th></th>
+                      </tr>
+                    </thead> -->
+                    <tbody>
+                      <tr>
+                        <td style="width: 50%;">
+                          <strong>TCI / Admission</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.patientclasstext }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Consultant</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.consultingdoctortext }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Specialty</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.specialtytext }}
+                        </td>
+                      </tr>
+                      <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                        <td>
+                          <strong>Admission Date</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.admitdatetime | date: 'dd/MM/yyyy' }}
+                        </td>
+                      </tr>
+                      <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                        <td>
+                          <strong>Discharge Date</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.dischargedatetime | date: 'dd/MM/yyyy' }}
+                        </td>
+                      </tr>
+                      <tr *ngIf="linkedEncounter.patientclasstext === 'TCI'">
+                        <td>
+                          <strong>TCI Date</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.intendedadmissiondate | date: 'dd/MM/yyyy' }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Status</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.episodestatustext }}
+                        </td>
+                      </tr>
+                      <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                        <td>
+                          <strong>Ward</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.assignedpatientlocationpointofcare }}
+                        </td>
+                      </tr>
+                      <tr *ngIf="linkedEncounter.patientclasstext === 'TCI'">
+                        <td>
+                          <strong>Intended Ward</strong>
+                        </td>
+                        <td>
+                          {{ linkedEncounter.intendedward }}
+                        </td>
+                      </tr>
+                      <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                        <td>
+                          <strong>Locked on admission</strong>
+                        </td>
+                        <td>
+                          <div *ngIf="!selectedPOA.islocked">
+                            <div class="badge badge-secondary">
+                              POA was locked on admission by system but has been over-writted by a user
+                            </div>
+                          </div>
+                          <div *ngIf="selectedPOA.islocked">
+                            <div class="badge badge-info">
+                              POA has been locked on admission by system
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="surgeon">Surgeon:</label>
+                <input type="text" name="surgeon" id="surgeon" class="form-control" [(ngModel)]="selectedPOA.surgeon"
+                  disabled #surgeon="ngModel" maxlength="255">
+              </div>
+
+              <div class="form-group">
+                <label for="operation">Operation:</label>
+                <input type="text" name="operation" id="operation" class="form-control" disabled
+                  [(ngModel)]="selectedPOA.operation" #operation="ngModel" maxlength="255">
+              </div>
+
+
+              <div class="form-group">
+                <label for="admissiondate">Date of Admission:</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                    disabled id="admissiondate" name="admissiondate" #admissiondate="ngModel"
+                    [(ngModel)]="selectedPOA.admissiondate" [bsConfig]="bsConfig" aria-describedby="admissiondate" />
+
+                </div>
+              </div>
+
+
+
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="losdays">Length of Stay (Days):</label>
+                  <input type="number" class="form-control" id="losdays" name="losdays" disabled
+                    [(ngModel)]="selectedPOA.losdays" #losdays="ngModel">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="losnights">(Nights)</label>
+                  <input type="number" class="form-control" id="losnights" id="losnights" name="losnights" disabled
+                    [(ngModel)]="selectedPOA.losnights" #losnights="ngModel">
+                </div>
+              </div>
+
+
+
+
+
+
+
+              <div class="form-group">
+                <label for="dischargedate">Date of Discharge:</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                    disabled id="dischargedate" name="dischargedate" #dischargedate="ngModel"
+                    [(ngModel)]="selectedPOA.dischargedate" [bsConfig]="bsConfig" aria-describedby="dischargedate" />
+
+                </div>
+              </div>
+
+
+              <!-- <h6 class="text-info">HDU</h6> -->
+
+
+              <div class="form-group">
+                <label class="customcheck">HDU Required
+                  <input type="checkbox" value="hdurequired" id="hdurequired" name="hdurequired" disabled
+                    [(ngModel)]="selectedPOA.hdurequired" #hdurequired="ngModel">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+
+              <div *ngIf="selectedPOA.hdurequired">
+                <div class="form-group">
+                  <label for="hdurequiredreason">Reason HDU Required:</label>
+                  <textarea name="hdurequiredreason" id="hdurequiredreason" class="form-control" rows="6" disabled
+                    [(ngModel)]="selectedPOA.hdurequiredreason" #hdurequiredreason="ngModel"></textarea>
+                </div>
+              </div>
+
+              <!-- <h6 class="text-info">Revalidating POA</h6> -->
+
+              <div class="form-group">
+                <label class="customcheck">POA Revalidated
+                  <input type="checkbox" value="revalidated" id="revalidated" name="revalidated" disabled
+                    [(ngModel)]="selectedPOA.revalidated" #revalidated="ngModel">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+
+              <div *ngIf="selectedPOA.revalidated">
+                <div class="form-group">
+                  <label for="revalidationtype">Revalidation Type:</label>
+                  <select name="revalidationtype" id="revalidationtype" class="form-control" disabled
+                    [(ngModel)]="selectedPOA.revalidationtype" #revalidationtype="ngModel">
+                    <!-- <option *ngFor="let opt of staffGroups" value="{{ opt.poa_staffgroup_id }}">
+                    {{ opt.groupname }}
+                  </option> -->
+                    <option value=null>Please select . . .</option>
+                    <option value="Face to face assessment">Face to face assessment</option>
+                    <option value="Telephone assessment only">Telephone assessment only</option>
+                    <option value="Telephone assessment plus walk-in/ HCAH (Healthcare at home)">Telephone assessment
+                      plus
+                      walk-in/ HCAH (Healthcare at home)</option>
+
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="revalidateddate">Revalidation Date:</label>
+                  <div class="input-group">
+                    <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                      disabled id="revalidateddate" name="revalidateddate" #revalidateddate="ngModel"
+                      [(ngModel)]="selectedPOA.revalidateddate" [bsConfig]="bsConfig"
+                      aria-describedby="revalidateddate" />
+
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+              <!-- <quill-editor [(ngModel)]="poaNote.notes" name="notes" id="notes" required #notes="ngModel">
+              <div quill-editor-toolbar>
+                <span class="ql-formats">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                  <button class="ql-strike"></button>
+                </span>
+                <span class="ql-formats">
+                  <select class="ql-color"></select>
+                  <select class="ql-background"></select>
+                </span>
+                <span class="ql-formats">
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                  <select class="ql-align">
+                    <option selected></option>
+                    <option value="center"></option>
+                    <option value="right"></option>
+                    <option value="justify"></option>
+                  </select>
+                </span>
+              </div>
+            </quill-editor>
+            <div [hidden]="notes.valid" class="text-danger">
+              <i>Notes is a required field</i>
+            </div> -->
+
+              <!-- <hr />
+
+              <button class="btn btn-info text-white btn-block" (click)="saveAssessment()"
+                [disabled]="!assessmentForm.form.valid">
+                Save
+              </button> -->
+
+
+            </form>
+
+          </div>
+
+          <!-- <div class="alert alert-success">
+            <strong>personId:</strong> {{ personId }}
+            <br />
+            <strong>poaId:</strong> {{ poaId }}
+          </div> -->
+
+          <!-- <button class="btn btn-success" (click)="save()">Save</button> -->
+
+        </div>
+
+
+      </div>
+
+
+      <hr />
+
+      <button class="btn btn-info text-white" (click)="backToList()">
+        <fa name="chevron-left"></fa> Back
+      </button>
+
+    </div>
+
+  </span>
+</div>
+<div class="modal-footer">
+  <!-- <button type="button" class="btn btn-secondary btn-sm" (click)="decline()">
+    <fa name="times"></fa> {{ btnCancelText }}
+  </button>
+  <button type="button" class="btn btn-primary btn-sm" (click)="accept()" ngbAutofocus>
+    <fa name="check"></fa> {{ btnOkText }}
+  </button> -->
+</div>
+
+<ngx-spinner name="form-history-spinner" bdColor="rgba(0, 0, 0, 0.8)" [fullScreen]="false" type="ball-spin-clockwise"
+  size="medium">
+  <p style="color: white"> Loading ... </p>
+</ngx-spinner>

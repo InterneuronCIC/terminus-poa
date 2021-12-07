@@ -1,0 +1,267 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div *ngIf="selectedView === 'medsHistory'">
+
+  <!-- <div class="alert alert-success">
+    <strong>personId:</strong> {{ personId }}
+    <br />
+    <strong>poaId:</strong> {{ poaId }}
+  </div>
+  <br />
+  <br /> -->
+
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedmedicationhistory">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right"
+              (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedmedicationhistory">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <div class="card">
+    <div class="card-header bg-secondary text-dark">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <span *ngIf="appService.lockedOrBlocked">
+              <fa name="lock" class="text-info"></fa> &nbsp;
+            </span>
+            Medications List
+          </h5>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+          <div *ngIf="selectedPOA">
+            <div *ngIf="selectedPOA.reviewedbypharmacist">
+              <button class="btn btn-sm btn-success btn-block text-white float-right"
+                (click)="markReviewed(false)">Reviewed by POA Pharmacist <fa name="check-square-o"></fa></button>
+            </div>
+            <div *ngIf="!selectedPOA.reviewedbypharmacist">
+              <button class="btn btn-sm btn-danger btn-block text-white float-right" (click)="markReviewed(true)">Not
+                Reviewed by POA Pharmacist</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="poaPrescriptionList">
+          <button class="btn btn-info text-white float-right" (click)="editCurrentMedications()"
+            *ngIf="!appService.lockedOrBlocked && poaPrescriptionList.length > 0">
+            Edit Medications
+          </button>
+          <button class="btn btn-info text-white float-right" (click)="editCurrentMedications()"
+            *ngIf="!appService.lockedOrBlocked && poaPrescriptionList.length == 0">
+            Start Medications
+          </button>
+
+
+
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+
+
+      <div *ngIf="scriploaded==false">
+        <span>Loading module, please wait </span>
+        <span class="spinner-border spinner-border9-sm" role="status" aria-hidden="true"></span>
+      </div>
+      <div *ngIf="showCurrentMedsModule">
+        <div [ModuleLoader]="componentModuleData" (ScripLoadComplete)="hideModuleLoadingMessage()"></div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <br />
+  <br /> -->
+
+
+  <div class="card">
+
+    <div class="card-header bg-white text-dark">
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4 class="text-dark">
+            <span *ngIf="appService.lockedOrBlocked">
+              <fa name="lock" class="text-info"></fa> &nbsp;
+            </span>
+            Medication History
+          </h4>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-5">
+              <div *ngIf="selectedPOA">
+                <div *ngIf="selectedPOA.reviewedbypharmacist">
+                  <button class="btn btn-sm btn-outline-success btn-block " (click)="markReviewed(false)">Reviewed
+                    by Pharmacy <fa name="check-square-o"></fa></button>
+                </div>
+                <div *ngIf="!selectedPOA.reviewedbypharmacist">
+                  <button class="btn btn-sm btn-outline-danger btn-block" (click)="markReviewed(true)">Not
+                    Reviewed by Pharmacy</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewPrevious()"
+                *ngIf="!appService.lockedOrBlocked">
+                <fa name="clock-o"></fa> Previous POAs
+              </button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewHistory()">
+                <fa name="check-square"></fa> Audit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+      <!-- <code>
+        {{ selectedPOA | json}}
+      </code> -->
+
+
+      <div *ngIf="selectedPOA" style="margin-top: -15px;">
+        <span *ngIf="selectedPOA.reviewedbypharmacist" class="text-success">
+          <fa name="check-square-o"></fa> Reviewed on
+          <!-- {{selectedPOA.reviewedbypharmacistdate }} -->
+          {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy HH:mma'}}
+          ({{selectedPOA.reviewedbypharmacistuser}})
+        </span>
+
+
+        <span *ngIf="!selectedPOA.reviewedbypharmacist" class="text-danger">
+          Not Reviewed
+        </span>
+      </div>
+
+      <formio [form]="generatedForm" (submit)="onSubmit($event)" (render)="onRender()" [refresh]="triggerRefresh"
+        [options]="options" [submission]="submission" (change)="onChange($event)">
+      </formio>
+
+      <div *ngIf="appService.autoproceedtonextsection"
+        style="text-align: right; font-style: italic; padding-right: 20px; margin-top: -10px;">
+        <span class="text-info">* Auto proceed to next section is on</span>
+      </div>
+
+      <div *ngIf="showVersionWarning">
+        <div class="alert alert-warning">
+
+          <small>
+            <span>This form was created using a previous version of the selected form (version:
+              {{formResponse.formversion}}).</span>
+            <br />
+            <span>Current Version: {{ formVersion }}</span>
+          </small>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedmedicationhistory">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right"
+              (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedmedicationhistory">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div *ngIf="selectedView === 'currentMedications'">
+  <app-current-medications [preOpAssessment]="medsHistoryPOA" (medsHistoryPOAChange)="update()"
+    (currentMedsViewClosed)="onCurrentMedsViewClosed($event)">
+  </app-current-medications>
+</div>

@@ -1,0 +1,99 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="row">
+  <div class="col-md-6">
+    <button class="btn btn-info text-white" (click)="cancel()">
+      <fa name="check"></fa> Done
+    </button>
+
+  </div>
+  <div class="col-md-6">
+
+    <!-- <span *ngIf="selectedPOA.reviewedbypharmacist" class="text-success float-right">
+      <fa name="check-square-o"></fa> Reviewed on {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy'}}
+    </span>
+
+    <span *ngIf="!selectedPOA.reviewedbypharmacist" class="text-danger float-right">
+      Not Reviewed
+    </span> -->
+
+  </div>
+</div>
+<br /><br />
+
+
+<div class="card">
+  <div class="card-header bg-secondary text-dark">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>
+          Medications
+        </h5>
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="selectedPOA">
+          <div *ngIf="selectedPOA.reviewedbypharmacist">
+            <button class="btn btn-sm btn-success btn-block text-white float-right"
+              (click)="markReviewed(false)">Reviewed by Pharmacy <fa name="check-square-o"></fa></button>
+          </div>
+          <div *ngIf="!selectedPOA.reviewedbypharmacist">
+            <button class="btn btn-sm btn-danger btn-block text-white float-right" (click)="markReviewed(true)">Not
+              Reviewed by Pharmacy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div *ngIf="selectedPOA" style="margin-top: -15px;">
+      <span *ngIf="selectedPOA.reviewedbypharmacist" class="text-success">
+        <fa name="check-square-o"></fa> Reviewed on {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy HH:mma'}}
+        ({{selectedPOA.reviewedbypharmacistuser}})
+      </span>
+
+      <span *ngIf="!selectedPOA.reviewedbypharmacist" class="text-danger">
+        Not Reviewed
+      </span>
+    </div>
+
+    <div class="alert alert-secondary">
+      <strong>Please note that all edits in this module are automatically saved</strong>
+    </div>
+    <div *ngIf="scriploaded==false">
+      <span>Loading module, please wait </span>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </div>
+    <div *ngIf="showCurrentMedsModule">
+      <div [ModuleLoader]="componentModuleData" (ScripLoadComplete)="hideModuleLoadingMessage()"></div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- <div class="alert alert-secondary">
+  <strong>personId:</strong> {{ personId }}
+  <br />
+  <strong>poaId:</strong> {{ poaId }}
+</div>
+<br />
+<br /> -->

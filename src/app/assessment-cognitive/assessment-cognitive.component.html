@@ -1,0 +1,80 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<button class="btn btn-info text-white" (click)="cancel()">
+  <fa name="arrow-left"></fa> Return to assessments
+</button>
+
+
+
+<br /><br />
+
+<div class="card">
+  <div class="card-header bg-secondary text-dark">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>
+          <span *ngIf="appService.lockedOrBlocked">
+            <fa name="lock" class="text-info"></fa> &nbsp;
+          </span>
+          Cognitive Impairment Tool
+        </h5>
+
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-info float-right text-white" (click)="viewHistory()"
+          style="margin-left: 7px; margin-right: 7px;">
+          <fa name="check-square"></fa> Audit
+        </button>
+        <button class="btn btn-info float-right text-white" (click)="viewPrevious()"
+          *ngIf="!appService.lockedOrBlocked">
+          <fa name="clock-o"></fa> Previous POAs
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <formio [form]="generatedForm" (submit)="onSubmit($event)" (render)="onRender()" [refresh]="triggerRefresh"
+      [options]="options" [submission]="submission" (change)="onChange($event)">
+    </formio>
+
+    <div *ngIf="showVersionWarning">
+      <div class="alert alert-warning">
+
+        <small>
+          <span>This form was created using a previous version of the selected form (version:
+            {{formResponse.formversion}}).</span>
+          <br />
+          <span>Current Version: {{ formVersion }}</span>
+        </small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-secondary btn-sm text-white" (click)="cancel()">
+        <fa name="arrow-left"></fa> Return to assessments
+      </button>
+    </div>
+  </div>
+
+</div>

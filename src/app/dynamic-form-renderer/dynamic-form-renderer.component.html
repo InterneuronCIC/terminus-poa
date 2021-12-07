@@ -1,0 +1,142 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<!-- <h3>Form Renderer</h3> -->
+
+
+<!--
+<div class="alert alert-info">
+  <h6>{{ formVersion }}</h6>
+  <h6> {{formResponse.formversion}}</h6>
+  <h6> {{ contextKey }}</h6>
+  <pre> {{formResponse | json}}</pre>
+</div> -->
+
+
+
+<div class="card">
+  <div class="card-header text-dark" style="background-color: #e2e3e5;">
+    <h5>Options</h5>
+  </div>
+  <div class="card-body">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div *ngIf="formList">
+          Select a form:
+          <select [(ngModel)]="selectedFormId" class="form-control form-control-sm" id="selectedFormId"
+            (change)="getSelectedFormWithContext()" name="selectedFormId">
+
+            <option [ngValue]="null">Select a form</option>
+            <option *ngFor="let opt of formList" value="{{ opt.formbuilderform_id }}">
+              {{ opt.formname }} ( {{ opt.formbuildercategory_id }})
+            </option>
+
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row text-secondary">
+      <div class="col-md-12">
+        <fa name="plus" *ngIf="!showManualContext" class="float-left" (click)="toggleContextView()"></fa>
+        <fa name="minus" *ngIf="showManualContext" class="float-left" (click)="toggleContextView()"></fa>
+      </div>
+    </div>
+
+    <div *ngIf="showManualContext">
+      <div class="row">
+        <div class="col-md-12">
+          <div *ngIf="formList">
+            Select context:
+            <select [(ngModel)]="selectedContext" class="form-control form-control-sm" id="selectedContext"
+              (change)="getSelectedFormWithContext()" name="selectedContext">
+              <option *ngFor="let item of appContexts | keyvalue" value="{{ item.value }}">
+                {{ item.key | identifierTransform }}
+              </option>
+
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<div class="card" *ngIf="selectedFormId">
+  <div class="card-header text-dark" style="background-color: #e2e3e5;">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="h5">{{formName}}</div>
+      </div>
+      <div class="col-md-4">
+        <small class="float-right">Context: {{selectedContextType | identifierTransform}}</small>
+
+
+      </div>
+    </div>
+
+
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+
+
+
+          <formio [form]="generatedForm" (submit)="onSubmit($event)" (render)="onRender()" [refresh]="triggerRefresh"
+            [options]="options" [submission]="submission" (change)="onChange($event)">
+          </formio>
+
+          <div *ngIf="showVersionWarning">
+            <div class="alert alert-warning">
+
+              <small>
+                <span>This form was created using a previous version of the selected form (version:
+                  {{formResponse.formversion}}).</span>
+                <br />
+                <span>Current Version: {{ formVersion }}</span>
+              </small>
+            </div>
+          </div>
+
+
+          <!-- style="
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+" -->
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

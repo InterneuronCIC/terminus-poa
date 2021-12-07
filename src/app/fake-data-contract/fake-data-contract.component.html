@@ -1,0 +1,77 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="row text-secondary">
+  <div class="col-md-12">
+    <fa name="plus" *ngIf="!showManualContext" class="float-right" (click)="toggleContextView()"></fa>
+    <fa name="minus" *ngIf="showManualContext" class="float-right" (click)="toggleContextView()"></fa>
+  </div>
+</div>
+
+<div class="bg-light text-secondary border border-dark rounded" *ngIf="showManualContext"
+  style="padding:4px; margin-bottom:5px;">
+
+  PersonId<br />
+  <input type="text" class="form-control form-control-sm" id="PersonId" aria-describedby="PersonId"
+    [(ngModel)]="personId" placeholder="PersonId">
+
+
+
+  EncounterId<br />
+
+  <input type="text" class="form-control form-control-sm" id="EncounterId" aria-describedby="EncounterId"
+    [(ngModel)]="encounterId" placeholder="EncounterId">
+
+  <div class="row">
+    <div class="col-md-12" style="padding-top:4px;">
+      <button (click)="updateContextObject()" class="btn btn-secondary btn-sm pull-right">Update Context</button>
+    </div>
+  </div>
+</div>
+
+
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th>
+        &nbsp;
+      </th>
+    </tr>
+  </thead>
+  <tbody *ngIf="persons?.length != 0">
+    <tr *ngFor="let person of persons" style="cursor: pointer;">
+      <td (click)="selectPerson(person.person_id)">
+        <span class="h6">
+          {{person.fullname}}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="persons?.length == 0">
+    <tr>
+      <td colspan="1" class="no-data-available">No data!</td>
+    </tr>
+  </tbody>
+</table>
+
+<ngx-spinner name="spinner2" bdColor="rgba(0, 0, 0, 0.9)" [fullScreen]="false" type="ball-spin-clockwise" size="medium">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

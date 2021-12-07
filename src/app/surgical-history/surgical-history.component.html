@@ -1,0 +1,160 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="alert alert-secondary">
+  <div class="row">
+    <div class="col-md-2">
+      <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+        <fa name="arrow-left"></fa> Back
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+        <fa name="bars"></fa> Main menu
+      </button>
+    </div>
+    <div class="col-md-6">
+      <div *ngIf="selectedPOA && !appService.blocked">
+        <div *ngIf="selectedPOA.iscompletedsurgicalhistory">
+          <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
+            <fa name="check"></fa> Click here to remove Completed status
+          </button>
+        </div>
+        <div *ngIf="!selectedPOA.iscompletedsurgicalhistory">
+          <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+            <fa name="times"></fa> Click here to show Completed status
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+        Next <fa name="arrow-right"></fa>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+
+  <div class="card-header bg-white">
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-dark">
+          <span *ngIf="appService.lockedOrBlocked">
+            <fa name="lock" class="text-info"></fa> &nbsp;
+          </span>
+          Surgical History
+        </h4>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewPrevious()"
+              *ngIf="!appService.lockedOrBlocked">
+              <fa name="clock-o"></fa> Previous POAs
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewHistory()">
+              <fa name="check-square"></fa> Audit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="card-body">
+    <formio [form]="generatedForm" (submit)="onSubmit($event)" (render)="onRender()" [refresh]="triggerRefresh"
+      [options]="options" [submission]="submission" (change)="onChange($event)">
+    </formio>
+
+    <div *ngIf="appService.autoproceedtonextsection"
+      style="text-align: right; font-style: italic; padding-right: 20px; margin-top: -10px;">
+      <span class="text-info">* Auto proceed to next section is on</span>
+    </div>
+
+    <div *ngIf="showVersionWarning">
+      <div class="alert alert-warning">
+
+        <small>
+          <span>This form was created using a previous version of the selected form (version:
+            {{formResponse.formversion}}).</span>
+          <br />
+          <span>Current Version: {{ formVersion }}</span>
+        </small>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="alert alert-secondary">
+  <div class="row">
+    <div class="col-md-2">
+      <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+        <fa name="arrow-left"></fa> Back
+      </button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+        <fa name="bars"></fa> Main menu
+      </button>
+    </div>
+    <div class="col-md-6">
+      <div *ngIf="selectedPOA && !appService.blocked">
+        <div *ngIf="selectedPOA.iscompletedsurgicalhistory">
+          <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
+            <fa name="check"></fa> Click here to remove Completed status
+          </button>
+        </div>
+        <div *ngIf="!selectedPOA.iscompletedsurgicalhistory">
+          <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+            <fa name="times"></fa> Click here to show Completed status
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+        Next <fa name="arrow-right"></fa>
+      </button>
+    </div>
+  </div>
+</div>
+
+<br />
+<br />
+
+
+<!-- <div class="alert alert-success">
+  <strong>personId:</strong> {{ personId }}
+  <br />
+  <strong>poaId:</strong> {{ poaId }}
+</div> -->

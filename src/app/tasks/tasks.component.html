@@ -1,0 +1,624 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div *ngIf="selectedTasksView === 'tasks'">
+
+
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <!-- <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right"
+              (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-header bg-white text-dark">
+
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="text-dark">
+            <span *ngIf="appService.lockedOrBlocked">
+              <fa name="lock" class="text-info"></fa> &nbsp;
+            </span>
+            Tasks and POA Updates
+          </h4>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-block btn-outline-dark btn-sm" (click)="refresh()" *ngIf="!appService.locked">
+                <fa name="refresh"></fa> Refresh
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-block btn-outline-dark btn-sm" (click)="addNew($event)"
+                *ngIf="!appService.locked">
+                <fa name="plus"></fa> Add Task
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-md-6">
+          <label style="font-style: italic; font-weight: bold; font-size: 0.8em;" class="text-dark"
+            for="staffFilter">Staff
+            Group assigned to Task:</label>
+          <select name="staffFilter" id="staffFilter" class="form-control form-control-sm" [(ngModel)]="staffFilter">
+            <option value="All">All Tasks</option>
+            <option *ngFor="let opt of staffGroups" [value]="opt.groupname">{{ opt.groupname }}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <!-- <label style="font-style: italic; font-weight: bold; font-size: 0.8em;" class="text-dark"
+            for="referredToFilter">Referral for:</label>
+          <select name="referredToFilter" id="referredToFilter" class="form-control form-control-sm"
+            [(ngModel)]="referredToFilter">
+            <option value="All">All Tasks</option>
+            <option *ngFor="let opt of taskReferredToList" [value]="opt.referredto">{{ opt.referredto }}</option>
+          </select> -->
+        </div>
+      </div>
+
+
+      <br />
+
+
+
+
+
+      <div *ngIf="staffFilter != ''">
+
+
+
+
+        <ul class="list-group" *ngFor="let opt of filteredTasks">
+          <li class="list-group-item list-group-item-action" (click)="selectOption(opt.poa_task_id)">
+            <div class="border rounded bg-light" style="padding:5px; font-weight: bold;">
+              <span class="text-dark"> {{opt.taskname}}</span>
+            </div>
+            <div style="padding:5px;">
+              <div class="row">
+                <div class="col-md-4">
+                  <strong>Staff Group Assigned to Task</strong><br />
+                  {{opt.poa_staffgroup_id}}
+                </div>
+                <div class="col-md-4">
+                  <strong>Referral for</strong><br />
+                  {{opt.referredto}}
+                </div>
+                <div class="col-md-3">
+                  <strong>Status</strong><br />
+                  <span *ngIf="opt.poa_taskstatus_id == 'Completed'">
+                    <span class="text-success">
+                      <fa name="check"></fa>
+                    </span>
+                  </span>
+                  <span *ngIf="opt.poa_taskstatus_id == 'Cancelled'">
+                    <span class="text-danger">
+                      <fa name="times-circle-o"></fa>
+                    </span>
+                  </span>
+                  <span *ngIf="opt.poa_taskstatus_id == 'Rejected'">
+                    <span class="text-danger">
+                      <fa name="times-circle-o"></fa>
+                    </span>
+                  </span>
+                  <span *ngIf="opt.poa_taskstatus_id == 'In progress'">
+                    <span class="text-info">
+                      <fa name="cogs"></fa>
+                    </span>
+                  </span>
+
+                  {{opt.poa_taskstatus_id}}
+                </div>
+                <!-- <div class="col-md-4">
+                  <strong>Assigned to</strong><br />
+                  {{opt.assignedto}}
+                </div> -->
+                <div class="col-md-1" style="padding-top:2px;">
+                  <span class="float-right text-dark">
+                    <fa name="arrow-right"></fa>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+
+          </li>
+        </ul>
+
+        <!-- <li [ngClass]="{
+          'list-group-item list-group-item-primary': opt.poa_taskstatus_id == 'Completed',
+          'list-group-item list-group-item-danger': opt.poa_taskstatus_id == 'In progress',
+          'list-group-item list-group-item-danger': opt.poa_taskstatus_id == 'Cancelled',
+          'list-group-item list-group-item-action list-group-item-danger': opt.poa_taskstatus_id == 'Rejected',
+          'list-group-item list-group-item-action': opt.poa_taskstatus_id == 'New'
+        }" (click)="selectOption(opt.poa_task_id)"></li> -->
+
+        <!-- this.poaTask = {}  as PreOpTask;
+        this.poaTask.person_id = this.personId;
+        this.poaTask.poa_preopassessment_id = this.poaId;
+        this.poaTask.poa_task_id = String(Guid.create());
+        this.poaTask.notes = null;
+        this.poaTask.assignedto = null;
+        this.poaTask.taskcreatedby = null;
+        this.poaTask.taskdetails = null;
+        this.poaTask.poa_staffgroup_id = null;
+        this.poaTask.poa_taskstatus_id = "New";
+        this.GetTasksForPerson(); -->
+
+
+
+        <div *ngIf="filteredTasks?.length == 0">
+          <div class="alert alert-info">
+            No tasks for the selected filter
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+      <!-- <button class="btn btn-success" (click)="save()">Save</button> -->
+
+
+
+    </div>
+
+
+  </div>
+
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <!-- <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right"
+              (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <br />
+
+</div>
+
+<div *ngIf="selectedTasksView === 'new'">
+  <button class="btn btn-info text-white" (click)="cancelNew()">
+    <fa name="times"></fa> Cancel
+  </button>
+  <br /><br />
+
+  <div class="card">
+    <div class="card-header bg-secondary text-dark">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>
+            New Task
+          </h5>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+
+      <form #newTaskForm="ngForm">
+
+        <div class="form-group">
+          <label for="poa_staffgroup_id">Staff Group Assigned to Task:</label>
+          <select name="poa_staffgroup_id" id="poa_staffgroup_id" class="form-control"
+            [(ngModel)]="poaTask.poa_staffgroup_id" required #poa_staffgroup_id="ngModel">
+            <option value=null>Please select . . . . </option>
+            <option *ngFor="let opt of staffGroups" value="{{ opt.poa_staffgroup_id }}">
+              {{ opt.groupname }}
+            </option>
+          </select>
+          <div [hidden]="poa_staffgroup_id.valid" class="text-danger">
+            <small><i>&nbsp;&nbsp;*Staff Group is required</i></small>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="poa_taskstatus_id">Set status:</label>
+          <select name="poa_taskstatus_id" id="poa_taskstatus_id" class="form-control"
+            [(ngModel)]="poaTask.poa_taskstatus_id" required #poa_taskstatus_id="ngModel">
+            <option *ngFor="let opt of taskStatusList" value="{{ opt.poa_taskstatus_id }}">
+              {{ opt.statusname }}
+            </option>
+          </select>
+          <div [hidden]="poa_taskstatus_id.valid" class="text-danger">
+            <small><i>&nbsp;&nbsp;*Status is required</i></small>
+          </div>
+        </div>
+
+
+
+        <div *ngIf="commonTaskList && showCommonTasks">
+          <div *ngIf="commonTaskList.length > 0">
+            <div *ngIf="poaTask.commontasks">
+              <div class="form-group">
+                <label for="commontasks">Common Tasks:</label>
+                <ng-multiselect-dropdown [placeholder]="'Common Tasks'" [settings]="dropdownSettings"
+                  *ngIf="showCommonTasks && selectedItems" [data]="commonTaskList" name="commonTaskList"
+                  id="commonTaskList" [(ngModel)]="poaTask.commontasks" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)" (onDeSelect)="onItemDeSelect($event)"
+                  (onDeSelectAll)="onDeSelectAll($event)">
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <!-- <input type="text" name="taskname" id="taskname" class="form-control" maxlength="255"
+            [(ngModel)]="poaTask.taskname" required #taskname="ngModel"> -->
+          <!-- <div [hidden]="taskname.valid" class="text-danger">
+            <small><i>&nbsp;&nbsp;*Task is required</i></small>
+          </div> -->
+        </div>
+
+        <div class="alert alert-info">
+          <small>Selecting / Deselecting common tasks will update the Task Name field below</small>
+        </div>
+
+
+        <div class="form-group">
+          <label for="taskname">Task:</label>
+          <input type="text" name="taskname" id="taskname" class="form-control" maxlength="255"
+            [(ngModel)]="poaTask.taskname" required #taskname="ngModel">
+          <div [hidden]="taskname.valid" class="text-danger">
+            <small><i>&nbsp;&nbsp;*Task is required</i></small>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="taskdetails">Task Details:</label>
+          <textarea [(ngModel)]="poaTask.taskdetails" name="taskdetails" id="taskdetails" #taskdetails="ngModel"
+            class="form-control" rows="10">
+
+         </textarea>
+          <div [hidden]="taskdetails.valid" class="text-danger">
+            <small> <i>&nbsp;&nbsp;*Task details is required</i></small>
+          </div>
+        </div>
+
+
+        <!-- <div class="form-group">
+          <label for="referredto">Referred to:</label>
+          <select name="referredto" id="referredto" class="form-control"
+            [(ngModel)]="poaTask.referredto" #referredto="ngModel">
+            <option value=null>Please select . . . . </option>
+            <option *ngFor="let opt of staffGroups" value="{{ opt.referredto }}">
+              {{ opt.groupname }}
+            </option>
+          </select>
+          <div [hidden]="referredto.valid" class="text-danger">
+            <small><i>&nbsp;&nbsp;*Referred is required</i></small>
+          </div>
+        </div> -->
+
+
+
+        <!-- <div class="form-group">
+          <label for="assignedto">Assigned to:</label>
+          <input type="text" name="assignedto" id="assignedto" class="form-control" maxlength="255"
+            [(ngModel)]="poaTask.assignedto" #assignedto="ngModel">
+          <div [hidden]="assignedto.valid" class="text-danger">
+            <small><i>&nbsp;&nbsp;*Assigned to is required</i></small>
+          </div>
+        </div> -->
+
+
+        <hr />
+
+        <button class="btn btn-info text-white btn-block" (click)="saveNew()" [disabled]="!newTaskForm.form.valid">
+          Save
+        </button>
+
+
+      </form>
+
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<div *ngIf="selectedTasksView === 'edit'">
+
+  <button class="btn btn-info text-white" (click)="cancelNew()">
+    <fa name="times"></fa> Cancel
+  </button>
+  <br /><br />
+
+  <div *ngIf="selectedTask">
+
+    <div class="rounded " style="padding:5px; border: 2px solid darkgray;">
+      <div class="row">
+        <div class="col-md-10">
+          <h5 class="text-info">{{selectedTask.taskname}}</h5>
+        </div>
+        <div class="col-md-2" style="text-align: right;">
+          <span *ngIf="selectedTask.poa_taskstatus_id == 'Completed'">
+            <h5 class="text-success">
+              <fa name="check"></fa>
+            </h5>
+          </span>
+          <span *ngIf="selectedTask.poa_taskstatus_id == 'Cancelled'">
+            <h5 class="text-danger">
+              <fa name="times-circle-o"></fa>
+            </h5>
+          </span>
+          <span *ngIf="selectedTask.poa_taskstatus_id == 'Rejected'">
+            <h5 class="text-danger">
+              <fa name="times-circle-o"></fa>
+            </h5>
+          </span>
+          <span *ngIf="selectedTask.poa_taskstatus_id == 'In progress'">
+            <h5 class="text-info">
+              <fa name="cogs"></fa>
+            </h5>
+          </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div *ngIf="selectedTask.poa_staffgroup_id">
+            <strong>Staff Group Assigned to Task: </strong>
+            <br />
+            <div style="text-align: left; white-space: pre-wrap;" [innerHTML]="selectedTask.poa_staffgroup_id"></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div *ngIf="selectedTask.referredto">
+            <strong>Referral for: </strong>
+            <br />
+            <div style="text-align: left; white-space: pre-wrap;" [innerHTML]="selectedTask.referredto"></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div *ngIf="selectedTask.poa_staffgroup_id">
+            <strong>Created: </strong>
+            <br />
+            <div style="text-align: left; white-space: pre-wrap;">
+              By: {{selectedTask.taskcreatedby}} on {{selectedTask.taskcreateddatetime | date:'dd/MM/yyyy HH:mm'}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+
+      <div *ngIf="selectedTask.taskdetails">
+        <strong>Task Details: </strong>
+        <br />
+        <div class="bg-light" style="text-align: left; white-space: pre-wrap; padding:5px; border: 1px solid lightgray;"
+          [innerHTML]="selectedTask.taskdetails"></div>
+      </div>
+      <div *ngIf="!selectedTask.taskdetails">
+        <strong>Task Details: </strong>
+        <br />
+        <div class="bg-light"
+          style="text-align: left; white-space: pre-wrap; padding:5px; border: 0=1px solid lightgray;">
+          No details provided</div>
+      </div>
+
+
+
+
+    </div>
+
+    <br />
+
+    <div class="card">
+      <div class="card-header bg-secondary text-dark">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>
+              <span *ngIf="appService.locked">
+                <fa name="lock" class="text-info"></fa> &nbsp;
+              </span>
+              Edit Task
+            </h5>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-info float-right text-white" (click)="viewHistory()"
+              style="margin-left: 7px; margin-right: 7px;">
+              <fa name="check-square"></fa> Audit
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-body">
+
+        <div *ngIf="!appService.locked">
+          <form #newTaskForm="ngForm">
+
+
+
+            <div class="form-group">
+              <label for="poa_taskstatus_id">Set status:</label>
+              <select name="poa_taskstatus_id" id="poa_staffgroup_id" class="form-control"
+                [(ngModel)]="selectedTask.poa_taskstatus_id" required #poa_taskstatus_id="ngModel">
+                <option *ngFor="let opt of taskStatusList" value="{{ opt.poa_taskstatus_id }}">
+                  {{ opt.statusname }}
+                </option>
+              </select>
+              <div [hidden]="poa_taskstatus_id.valid" class="text-danger">
+                <small><i>&nbsp;&nbsp;*Status is required</i></small>
+              </div>
+            </div>
+
+            <!-- <div class="form-group">
+            <label for="assignedto">Assigned to:</label>
+            <input type="text" name="assignedto" id="assignedto" class="form-control" maxlength="255"
+              [(ngModel)]="selectedTask.assignedto" #assignedto="ngModel">
+            <div [hidden]="assignedto.valid" class="text-danger">
+              <small><i>&nbsp;&nbsp;*Assigned to is required</i></small>
+            </div>
+          </div> -->
+
+
+            <div class="form-group">
+              <label for="notes">Notes:</label>
+              <textarea [(ngModel)]="selectedTask.notes" name="notes" id="notes" #notes="ngModel" class="form-control"
+                rows="10">
+         </textarea>
+              <div [hidden]="notes.valid" class="text-danger">
+                <small> <i>&nbsp;&nbsp;*Notes is required</i></small>
+              </div>
+            </div>
+
+            <div class="form-group"
+              *ngIf="selectedTask.referredto === 'Anaesthetist' || selectedTask.poa_staffgroup_id === 'Preop-assessment Anaesthetist'">
+              <label class="customcheck">HDU Required
+                <input type="checkbox" value="hdurequired" id="hdurequired" name="hdurequired"
+                  [(ngModel)]="selectedTask.hdurequired" #hdurequired="ngModel">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+
+
+            <button class="btn btn-info text-white btn-block" (click)="saveEdit()" [disabled]="!newTaskForm.form.valid">
+              Save
+            </button>
+
+
+          </form>
+        </div>
+
+        <div *ngIf="appService.locked">
+          <form #newTaskForm="ngForm">
+
+
+
+            <div class="form-group">
+              <label for="poa_taskstatus_id">Set status:</label>
+              <select name="poa_taskstatus_id" id="poa_staffgroup_id" class="form-control" disabled
+                [(ngModel)]="selectedTask.poa_taskstatus_id" required #poa_taskstatus_id="ngModel">
+                <option *ngFor="let opt of taskStatusList" value="{{ opt.poa_taskstatus_id }}">
+                  {{ opt.statusname }}
+                </option>
+              </select>
+            </div>
+
+            <!-- <div class="form-group">
+            <label for="assignedto">Assigned to:</label>
+            <input type="text" name="assignedto" id="assignedto" class="form-control" maxlength="255"
+              [(ngModel)]="selectedTask.assignedto" #assignedto="ngModel">
+            <div [hidden]="assignedto.valid" class="text-danger">
+              <small><i>&nbsp;&nbsp;*Assigned to is required</i></small>
+            </div>
+          </div> -->
+
+
+            <div class="form-group">
+              <label for="notes">Notes:</label>
+              <textarea [(ngModel)]="selectedTask.notes" name="notes" id="notes" #notes="ngModel" class="form-control"
+                maxlength="1000" disabled rows="10">
+         </textarea>
+
+            </div>
+
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

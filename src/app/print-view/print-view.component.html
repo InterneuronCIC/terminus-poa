@@ -1,0 +1,1301 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="no-print">
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+
+
+
+      </div>
+      <div class="col-md-2">
+        <!-- <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-white text-dark">
+
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="text-dark">
+            <fa name="print"></fa>
+            Print View
+          </h4>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <div *ngIf="selectedPOA && !appService.blocked">
+                <div *ngIf="selectedPOA.isprinted">
+                  <button class="btn btn-sm btn-outline-success btn-block " (click)="markPrinted(false)">Printed <fa
+                      name="print"></fa></button>
+                </div>
+                <div *ngIf="!selectedPOA.isprinted">
+                  <button class="btn btn-sm btn-outline-danger btn-block" (click)="markPrinted(true)">Mark as
+                    Printed</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button class="btn bg-white text-dark border-dark btn-sm btn-block" (click)="expandAllSections()">
+                <fa name="plus"></fa> All
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button class="btn bg-white text-dark border-dark btn-sm btn-block" (click)="collapseAllSections()">
+                <fa name="minus"></fa> All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <div *ngIf="selectedPOA" style="margin-top: -15px;">
+        <span *ngIf="selectedPOA.isprinted" class="text-success">
+          <fa name="print"></fa> Printed on
+          <!-- {{selectedPOA.reviewedbypharmacistdate }} -->
+          {{selectedPOA.printeddate | date:'dd/MM/yyyy HH:mma'}}
+          ({{selectedPOA.printeduser}})
+        </span>
+
+
+        <span *ngIf="!selectedPOA.isprinted" class="text-danger">
+          Not Printed
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="print-only">
+  <h3 class="text-secondary">Preoperative Assessment</h3>
+  <br />
+</div> -->
+
+
+<div class="main-content">
+
+
+
+  <div class="list-group">
+    <div class="list-group-item list-group-item-action" *ngIf="patientBanner">
+
+      <div id="divListGroupHolder" *ngIf="selectedPOA" [ngClass]="{
+        'list-group-item list-group-item-warning border' : selectedPOA.poastatus == 'In Progress',
+        'list-group-item list-group-item-danger border' : selectedPOA.poastatus == 'Complete - Unfit to proceed',
+        'list-group-item list-group-item-success border' : selectedPOA.poastatus == 'Complete - Fit to proceed',
+        'list-group-item border' :  selectedPOA.poastatus == 'Please see anaesthetic ePOA – only baseline observations  recorded on this document',
+        'list-group-item border xxx' :  selectedPOA.poastatus == 'xxx'
+      }" style="padding: 7px; margin-bottom: 10px;">
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3>
+              {{ patientBanner.fullname }}
+            </h3>
+            <strong>DOB:</strong> {{ patientBanner.born}}
+            <br />
+            <strong>Gender:</strong> {{ patientBanner.gendertext}}
+          </div>
+          <div class="col-md-3">
+            <strong>Hospital Number:</strong> {{ patientBanner.hospitalnumber}}
+            <br />
+            <strong>NHS Number:</strong> {{ patientBanner.nhsnumber}}
+          </div>
+          <div class="col-md-3">
+            <strong>Assessment Date:</strong> {{ selectedPOA.poadate | date: 'dd/MM/yyyy' }}
+            <br />
+            <strong>Status:</strong> {{ selectedPOA.poastatus }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <br />
+
+  <!-- <div class="no-print">
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="text-secondary">Preoperative Assessment</h1>
+    </div>
+    <div class="col-md-6" style="text-align: right;">
+      <button class="btn bg-white text-dark border-dark btn-sm" (click)="expandAllSections()">
+        <fa name="plus"></fa> All
+      </button>
+      &nbsp;
+      <button class="btn bg-white text-dark border-dark btn-sm" (click)="collapseAllSections()">
+        <fa name="minus"></fa> All
+      </button>
+    </div>
+  </div>
+  <br />
+</div> -->
+
+  <div *ngIf="selectedPOA">
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideGeneral()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              General
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideGeneral"></fa>
+              <fa name="minus" *ngIf="showHideGeneral"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideGeneral" class="list-group-item list-group-item-action">
+        <div *ngIf="selectedPOA">
+          <form #assessmentForm="ngForm">
+
+            <div class="form-group">
+              <label for="poastatus">Status:</label>
+              <select name="poastatus" id="poastatus" class="form-control" [(ngModel)]="selectedPOA.poastatus" disabled
+                #poastatus="ngModel">
+                <!-- <option *ngFor="let opt of staffGroups" value="{{ opt.poa_staffgroup_id }}">
+          {{ opt.groupname }}
+        </option> -->
+                <option value="In Progress">In Progress</option>
+                <option value="Complete - Fit to proceed">Complete - Fit to proceeed</option>
+                <option value="Complete - Unfit to proceed">Complete - Unfit to proceeed</option>
+                <option value="Invalidated">Invalidated - Entered in error</option>
+                <option value="Please see anaesthetic ePOA – only baseline observations  recorded on this document">
+                  Please
+                  see anaesthetic ePOA – only baseline observations recorded on this document</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="poatype">Type:</label>
+              <select name="poatype" id="poatype" class="form-control" [(ngModel)]="selectedPOA.poatype" disabled
+                #poatype="ngModel">
+                <!-- <option *ngFor="let opt of staffGroups" value="{{ opt.poa_staffgroup_id }}">
+          {{ opt.groupname }}
+        </option> -->
+                <option value="Face to face assessment">Face to face assessment</option>
+                <option value="Telephone assessment only">Telephone assessment only</option>
+                <option value="Telephone assessment plus walk-in/ HCAH (Healthcare at home)">Telephone assessment plus
+                  walk-in/ HCAH (Healthcare at home)</option>
+              </select>
+
+            </div>
+
+            <div class="form-group">
+              <label for="poatype">Linked TCI / Encounter:</label>
+              <select name="linkedencounterid" id="linkedencounterid" class="form-control" disabled
+                [(ngModel)]="selectedPOA.linkedencounterid" #linkedencounterid="ngModel">
+                <option value=null>
+                  Please select linked TCI / Encounter
+                </option>
+                <option *ngFor="let opt of linkedEncounterList" value="{{ opt.encounter_id }}">
+                  {{ opt.summary }}
+                </option>
+              </select>
+            </div>
+
+            <div *ngIf="linkedEncounter">
+              <div class="bg-light text-dark border border-secondary rounded"
+                style="padding:5px; margin-bottom:5px; font-size:0.8em;">
+                <table class="table table-bordered table-sm">
+                  <thead>
+                    <!-- <tr>
+                <th></th>
+              </tr>
+            </thead> -->
+                  <tbody>
+                    <tr>
+                      <td style="width: 50%;">
+                        <strong>TCI / Admission</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.patientclasstext }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Consultant</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.consultingdoctortext }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Specialty</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.specialtytext }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                      <td>
+                        <strong>Admission Date</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.admitdatetime | date: 'dd/MM/yyyy' }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                      <td>
+                        <strong>Discharge Date</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.dischargedatetime | date: 'dd/MM/yyyy' }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="linkedEncounter.patientclasstext === 'TCI'">
+                      <td>
+                        <strong>TCI Date</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.intendedadmissiondate | date: 'dd/MM/yyyy' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Status</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.episodestatustext }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                      <td>
+                        <strong>Ward</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.assignedpatientlocationpointofcare }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="linkedEncounter.patientclasstext === 'TCI'">
+                      <td>
+                        <strong>Intended Ward</strong>
+                      </td>
+                      <td>
+                        {{ linkedEncounter.intendedward }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="linkedEncounter.patientclasstext != 'TCI'">
+                      <td>
+                        <strong>Locked on admission</strong>
+                      </td>
+                      <td>
+                        <div *ngIf="!selectedPOA.islocked">
+                          <div class="badge badge-secondary">
+                            POA was locked on admission by system but has been over-writted by a user
+                          </div>
+                        </div>
+                        <div *ngIf="selectedPOA.islocked">
+                          <div class="badge badge-info">
+                            POA has been locked on admission by system
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="poadate">Assessment Date:</label>
+              <div class="input-group">
+                <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                  disabled id="poadate" name="poadate" #poadate="ngModel" [(ngModel)]="selectedPOA.poadate"
+                  [bsConfig]="bsConfig" aria-describedby="poadate" required />
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <label for="surgeon">Surgeon:</label>
+              <input type="text" name="surgeon" id="surgeon" class="form-control" [(ngModel)]="selectedPOA.surgeon"
+                disabled #surgeon="ngModel" maxlength="255">
+            </div>
+
+            <div class="form-group">
+              <label for="operation">Operation:</label>
+              <input type="text" name="operation" id="operation" class="form-control" disabled
+                [(ngModel)]="selectedPOA.operation" #operation="ngModel" maxlength="255">
+            </div>
+
+
+            <div class="form-group">
+              <label for="admissiondate">Date of Admission:</label>
+              <div class="input-group">
+                <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                  disabled id="admissiondate" name="admissiondate" #admissiondate="ngModel"
+                  [(ngModel)]="selectedPOA.admissiondate" [bsConfig]="bsConfig" aria-describedby="admissiondate" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="losdays">Length of Stay (Days):</label>
+                <input type="number" class="form-control" id="losdays" name="losdays" disabled
+                  [(ngModel)]="selectedPOA.losdays" #losdays="ngModel">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="losnights">(Nights)</label>
+                <input type="number" class="form-control" id="losnights" id="losnights" name="losnights" disabled
+                  [(ngModel)]="selectedPOA.losnights" #losnights="ngModel">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dischargedate">Date of Discharge:</label>
+              <div class="input-group">
+                <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                  disabled id="dischargedate" name="dischargedate" #dischargedate="ngModel"
+                  [(ngModel)]="selectedPOA.dischargedate" [bsConfig]="bsConfig" aria-describedby="dischargedate" />
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="customcheck">HDU Required
+                <input type="checkbox" value="hdurequired" id="hdurequired" name="hdurequired" disabled
+                  [(ngModel)]="selectedPOA.hdurequired" #hdurequired="ngModel">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+
+            <div *ngIf="selectedPOA.hdurequired">
+              <div class="form-group">
+                <label for="hdurequiredreason">Reason HDU Required:</label>
+                <textarea name="hdurequiredreason" id="hdurequiredreason" class="form-control" rows="6" disabled
+                  [(ngModel)]="selectedPOA.hdurequiredreason" #hdurequiredreason="ngModel"></textarea>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="customcheck">POA Revalidated
+                <input type="checkbox" value="revalidated" id="revalidated" name="revalidated" disabled
+                  [(ngModel)]="selectedPOA.revalidated" #revalidated="ngModel">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+
+            <div *ngIf="selectedPOA.revalidated">
+              <div class="form-group">
+                <label for="revalidationtype">Revalidation Type:</label>
+                <select name="revalidationtype" id="revalidationtype" class="form-control" disabled
+                  [(ngModel)]="selectedPOA.revalidationtype" #revalidationtype="ngModel">
+                  <option value=null>Please select . . .</option>
+                  <option value="Face to face assessment">Face to face assessment</option>
+                  <option value="Telephone assessment only">Telephone assessment only</option>
+                  <option value="Telephone assessment plus walk-in/ HCAH (Healthcare at home)">Telephone assessment
+                    plus
+                    walk-in/ HCAH (Healthcare at home)</option>
+
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="revalidateddate">Revalidation Date:</label>
+                <div class="input-group">
+                  <input class="form-control" type="text" style="width:8em;" placeholder="DD/MM/YYYY" bsDatepicker
+                    disabled id="revalidateddate" name="revalidateddate" #revalidateddate="ngModel"
+                    [(ngModel)]="selectedPOA.revalidateddate" [bsConfig]="bsConfig"
+                    aria-describedby="revalidateddate" />
+
+                </div>
+              </div>
+
+
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHidePastMedicalHistory()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Past Medical History and Anaesthetic Issues
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHidePastMedicalHistory"></fa>
+              <fa name="minus" *ngIf="showHidePastMedicalHistory"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHidePastMedicalHistory" class="list-group-item list-group-item-action">
+        <formio [form]="formIOPastMedicalHistoryForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOPastMedicalHistorySubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideTasks()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Tasks and POA Updates
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideTasks"></fa>
+              <fa name="minus" *ngIf="showHideTasks"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideTasks" class="list-group-item list-group-item-action">
+        <ul class="list-group" *ngFor="let opt of poaTasks">
+          <li class="list-group-item list-group-item-action">
+            <div class="border rounded bg-light" style="padding:5px; font-weight: bold;">
+              <span class="text-dark"> {{opt.taskname}}</span>
+            </div>
+            <div style="padding:5px;">
+              <div class="row">
+                <div class="col-md-4">
+                  <strong>Staff Group Assigned to Task</strong><br />
+                  {{opt.poa_staffgroup_id}}
+                </div>
+                <div class="col-md-4">
+                  <strong>Referral for</strong><br />
+                  {{opt.referredto}}
+                </div>
+                <div class="col-md-4">
+                  <strong>Status</strong><br />
+                  <span *ngIf="opt.poa_taskstatus_id == 'Completed'">
+                    <span class="text-success">
+                      <fa name="check"></fa>
+                    </span>
+                  </span>
+                  <span *ngIf="opt.poa_taskstatus_id == 'Cancelled'">
+                    <span class="text-danger">
+                      <fa name="times-circle-o"></fa>
+                    </span>
+                  </span>
+                  <span *ngIf="opt.poa_taskstatus_id == 'Rejected'">
+                    <span class="text-danger">
+                      <fa name="times-circle-o"></fa>
+                    </span>
+                  </span>
+                  <span *ngIf="opt.poa_taskstatus_id == 'In progress'">
+                    <span class="text-info">
+                      <fa name="cogs"></fa>
+                    </span>
+                  </span>
+
+                  {{opt.poa_taskstatus_id}}
+                </div>
+                <!-- <div class="col-md-4">
+                <strong>Assigned to</strong><br />
+                {{opt.assignedto}}
+              </div> -->
+
+              </div>
+              <strong>Notes</strong><br />
+              <div class="bg-white border" style="padding: 6px; text-align: left; white-space: pre-wrap;"
+                [innerHTML]="opt.notes"></div>
+            </div>
+
+
+
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideBaselineObservations()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Baseline Observations
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideBaselineObservations"></fa>
+              <fa name="minus" *ngIf="showHideBaselineObservations"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideBaselineObservations" class="list-group-item list-group-item-action">
+        <formio [form]="formIOBaselineObservationsForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOBaselineObservationsSubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideAllergies()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Allergies
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideAllergies"></fa>
+              <fa name="minus" *ngIf="showHideAllergies"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideAllergies" class="list-group-item list-group-item-action">
+        <div *ngIf="selectedPOA && allergyIntoleranceList">
+
+          <div *ngIf="activeAllergies.length == 0">
+            <div class="alert alert-info">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>There are no active allergies recorded for this patient</h6>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="allergyIntoleranceList.length > 0">
+            <br />
+            <ul class="list-group" *ngFor="let opt of allergyIntoleranceList">
+              <li class="list-group-item"
+                [ngClass]="opt.clinicalstatusvalue == 'Active' ? 'list-group-item text-info' : 'list-group-item text-secondary'">
+
+                <div class="row">
+
+                  <div class="col-md-12">
+                    <div class="h6">
+
+                      <div *ngIf="opt.clinicalstatusvalue != 'Active'" class="border rounded bg-light"
+                        style="padding: 5px; font-weight: bold;">
+                        <span *ngIf="opt.causativeagentcodesystem == 'NON-ALLERGY'">
+                          <fa name="flag"></fa> &nbsp;
+                        </span>
+                        <span *ngIf="opt.causativeagentcodesystem != 'NON-ALLERGY'">
+                          <fa name="exclamation-triangle"></fa> &nbsp;
+                        </span>
+                        {{opt.causativeagentdescription}}
+                      </div>
+
+                      <div *ngIf="opt.clinicalstatusvalue == 'Active'" [ngClass]="{
+                                'border rounded bg-danger text-white': opt.causativeagentcode === 'Not posible to ascertain if patient has any allergies',
+                                'border rounded bg-success text-white' : opt.causativeagentcode === 'No known allergies',
+                                'border rounded bg-info text-white' : opt.causativeagentcodesystem != 'NON-ALLERGY'
+                              }" style="padding: 5px; font-weight: bold;">
+                        <span *ngIf="opt.causativeagentcodesystem == 'NON-ALLERGY'">
+                          <fa name="flag"></fa> &nbsp;
+                        </span>
+                        <span *ngIf="opt.causativeagentcodesystem != 'NON-ALLERGY'">
+                          <fa name="exclamation-triangle"></fa> &nbsp;
+                        </span>
+                        {{opt.causativeagentdescription}}
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+                <div class="row" style="font-size: 0.8em;">
+                  <div class="col-md-2">
+                    <div style="padding-left: 10px;">
+                      <strong class="text-secondary">Status</strong>
+                      <br />
+                      {{opt.clinicalstatusvalue}}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <strong class="text-secondary">Verification Status</strong>
+                    <br />
+                    {{opt.verificationstatus}}
+                  </div>
+                  <div class="col-md-3">
+                    <div *ngIf="opt.causativeagentcodesystem != 'NON-ALLERGY'">
+                      <strong class="text-secondary">Criticality</strong>
+                      <br />
+                      {{opt.criticality}}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div style="padding-left: 10px;" *ngIf="opt.causativeagentcodesystem != 'NON-ALLERGY'">
+                      <strong class="text-secondary">Category</strong>
+                      <br />
+                      {{opt.category}}
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+
+                  </div>
+                </div>
+
+
+              </li>
+            </ul>
+
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideAssessments()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Assessments
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideAssessments"></fa>
+              <fa name="minus" *ngIf="showHideAssessments"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideAssessments" class="list-group-item list-group-item-action">
+        <div *ngIf="poaSummary">
+
+          <div class="card">
+            <div class="card-header bg-light text-dark">
+              <div class="row">
+                <div class="col-md-9">
+                  <h6>
+                    AKI
+                  </h6>
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="poaSummary">
+                <table class="table table-bordered table-sm">
+                  <tr>
+                    <td>AKI Status</td>
+                    <td>
+                      {{poaSummary.akistatus}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Predicted AKI Risk (%)</td>
+                    <td>
+                      {{poaSummary.akirisk}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Additional Risk Factors</td>
+                    <td>
+                      {{poaSummary.akiadditionalriskfactors}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Guidance</td>
+                    <td>
+                      {{poaSummary.akiguidance}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-light text-dark">
+              <div class="row">
+                <div class="col-md-9">
+                  <h6>
+                    SORT
+                  </h6>
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="poaSummary">
+                <table class="table table-bordered table-sm">
+                  <tr>
+                    <td>SORT Status</td>
+                    <td>
+                      {{poaSummary.sortstatus}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Estimated risk of 30 day mortality(%)</td>
+                    <td>
+                      {{poaSummary.sortrisk}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Notes</td>
+                    <td>
+                      {{poaSummary.sortnotes}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-light text-dark">
+              <div class="row">
+                <div class="col-md-9">
+                  <h6>
+                    Rockwood Clinical Frailty
+                    Scale
+                  </h6>
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="poaSummary">
+                <table class="table table-bordered table-sm">
+                  <tr>
+                    <td>Rockwood Clinical Frailty
+                      Scale Score</td>
+                    <td>
+                      {{poaSummary.frailtyscore}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-light text-dark">
+              <div class="row">
+                <div class="col-md-9">
+                  <h6>
+                    Cognitive Screening
+                    Tool
+                  </h6>
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="poaSummary">
+                <table class="table table-bordered table-sm">
+                  <tr>
+                    <td>Reasons for assessment</td>
+                    <td>
+
+                      <!-- <div *ngFor="let p of kvp">
+                      {{p.key}} {{p.value}}
+                    </div> -->
+
+                      <div *ngFor="let item of kvp | keyvalue">
+                        <div *ngIf="item.value">
+                          <fa name="check"></fa> {{item.key}}
+                        </div>
+                      </div>
+
+                      <!-- <div *ngFor="let poa of poaSummary.cognitivecriteria | json">
+                      {{poa}}
+                    </div> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Patient has a formal diagnosis of dementia?</td>
+                    <td>
+                      {{poaSummary.cognitivedementiadiagnosis}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>6 CIT Score</td>
+                    <td>
+                      {{poaSummary.cognitivecitscore}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>6 CIT Guidance</td>
+                    <td>
+                      {{poaSummary.cognitivecitguidance}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Formal Carer (Other than next of kin) </td>
+                    <td>
+                      {{poaSummary.cognitiveformalcarer}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Point of contact (Other than next of kin)</td>
+                    <td>
+                      {{poaSummary.cognitivepointofcontact}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-light text-dark">
+              <div class="row">
+                <div class="col-md-9">
+                  <h6>
+                    Adult Malnutrition Screening Tool
+                  </h6>
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="poaSummary">
+                <table class="table table-bordered table-sm">
+                  <tr>
+                    <td>Score</td>
+                    <td>
+                      {{poaSummary.malnutritionscore}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Guidance</td>
+                    <td>
+                      {{poaSummary.malnutritionguidance}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+
+
+
+
+    <!-- <div class="list-group">
+    <div class="list-group-item list-group-item-action" (click)="toggleShowHideCurrentMedications()">
+      <div class="row">
+        <div class="col-md-10">
+          <h3>
+            Current Medications List
+          </h3>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-link text-dark float-right">
+            <fa name="plus" *ngIf="!showHideCurrentMedications"></fa>
+            <fa name="minus" *ngIf="showHideCurrentMedications"></fa>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showHideCurrentMedications" class="list-group-item list-group-item-action">
+      <div *ngIf="scriploaded==false">
+        <span>Loading module, please wait </span>
+        <span class="spinner-border spinner-border9-sm" role="status" aria-hidden="true"></span>
+      </div>
+
+      <div [ModuleLoader]="componentModuleData" (ScripLoadComplete)="hideModuleLoadingMessage()"></div>
+
+    </div>
+  </div>
+
+  <br /> -->
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideMedicationHistory()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Medication History
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideMedicationHistory"></fa>
+              <fa name="minus" *ngIf="showHideMedicationHistory"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideMedicationHistory" class="list-group-item list-group-item-action">
+        <formio [form]="formIOMedicationHistoryForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOMedicationHistorySubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideSurgicalHistory()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Surgical History
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideSurgicalHistory"></fa>
+              <fa name="minus" *ngIf="showHideSurgicalHistory"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideSurgicalHistory" class="list-group-item list-group-item-action">
+        <formio [form]="formIOSurgicalHistoryForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOSurgicalHistorySubmission">
+        </formio>
+
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group" *ngIf="selectedPOA.poatype == 'Face to face assessment'"
+      (click)="toggleShowHidePhysicalExamination()">
+      <div class="list-group-item list-group-item-action">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Physical Examination
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHidePhysicalExamination"></fa>
+              <fa name="minus" *ngIf="showHidePhysicalExamination"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHidePhysicalExamination" class="list-group-item list-group-item-action">
+        <formio [form]="formIOPhysicalExaminationForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOPhysicalExaminationSubmission">
+        </formio>
+      </div>
+      <br />
+    </div>
+
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideFamilyHistory()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Family History
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideFamilyHistory"></fa>
+              <fa name="minus" *ngIf="showHideFamilyHistory"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideFamilyHistory" class="list-group-item list-group-item-action">
+        <formio [form]="formIOFamilyHistoryForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOFamilyHistorySubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideSocialHistory()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Social History
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideSocialHistory"></fa>
+              <fa name="minus" *ngIf="showHideSocialHistory"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideSocialHistory" class="list-group-item list-group-item-action">
+        <formio [form]="formIOSocialHistoryForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOSocialHistorySubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideInfectionControl()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Infection Control
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideInfectionControl"></fa>
+              <fa name="minus" *ngIf="showHideInfectionControl"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideInfectionControl" class="list-group-item list-group-item-action">
+        <formio [form]="formIOInfectionControlForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOInfectionControlSubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideInformationProvided()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Information Provided
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideInformationProvided"></fa>
+              <fa name="minus" *ngIf="showHideInformationProvided"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideInformationProvided" class="list-group-item list-group-item-action">
+        <formio [form]="formIOInformationProvidedForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOInformationProvidedSubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideFitnessOutcome()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Fitness Outcome
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideFitnessOutcome"></fa>
+              <fa name="minus" *ngIf="showHideFitnessOutcome"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideFitnessOutcome" class="list-group-item list-group-item-action">
+        <formio [form]="formIOFitnessOutcomeForm" [refresh]="triggerRefresh" [options]="options"
+          [submission]="formIOFitnessOutcomeSubmission">
+        </formio>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="list-group">
+      <div class="list-group-item list-group-item-action" (click)="toggleShowHideNotes()">
+        <div class="row">
+          <div class="col-md-10">
+            <h3>
+              Notes
+            </h3>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-link text-dark float-right">
+              <fa name="plus" *ngIf="!showHideNotes"></fa>
+              <fa name="minus" *ngIf="showHideNotes"></fa>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideNotes" class="list-group-item list-group-item-action">
+
+        <div class="list-group" *ngFor="let poa of poaNotes">
+          <br />
+
+          <div class="bg-light border" style="padding: 6px; text-align: left;">
+            <small class="text-info">{{poa.poa_staffgroup_id}}</small>
+          </div>
+
+          <div class="bg-white border" style="padding: 6px; text-align: left; white-space: pre-wrap;"
+            [innerHTML]="poa.notes"></div>
+
+          <div class="bg-light border" style="padding: 6px; text-align: right;">
+            <i>
+              <small class="text-info">Created by </small>
+              <small>{{poa._createdby}}</small>
+              <small class="text-info"> at </small>
+              <small>{{poa._createddate  | date: 'dd/MM/yyyy HH:mm a'}}</small>
+            </i>
+          </div>
+
+
+        </div>
+
+
+      </div>
+    </div>
+
+    <br />
+
+
+
+    <!--
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-secondary btn-sm text-white" (click)="cancel()">
+        <fa name="arrow-left"></fa> Return to main menu
+      </button>
+    </div>
+  </div> -->
+
+
+  </div>
+
+</div>
+
+
+<div class="no-print">
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <!-- <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-md-2">
+        <!-- <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner name="print-view-spinner" bdColor="rgba(0, 0, 0, 0.8)" [fullScreen]="false" type="ball-spin-clockwise"
+  size="medium">
+  <p style="color: white"> Loading Print View ..., please wait </p>
+</ngx-spinner>
+
+<footer id="footer" class="print-only text-secondary">
+  <div *ngIf="patientBanner">
+    {{ patientBanner.fullname }} {{ patientBanner.hospitalnumber}}
+  </div>
+</footer>

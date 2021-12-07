@@ -1,0 +1,65 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="well">
+  <h3>Calendar Demo</h3>
+
+
+  <div class="form-group">
+    <div class="input-group">
+      <input class="form-control" placeholder="DD/MM/YYYY" name="dp" [(ngModel)]="model" ngbDatepicker
+        #d="ngbDatepicker">
+      <div class="input-group-append">
+        <button class="btn btn-outline-dark calendar" (click)="d.toggle()" type="button">
+          <fa name="calendar"></fa>
+        </button> </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- <div class="input-group">
+
+    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+
+    <div class="input-group-append">
+      <button class="btn btn-outline-dark calendar" (click)="d.toggle()" type="button">📅</button>
+    </div>
+
+  </div>
+  <hr /> -->
+
+  <div *ngIf="model">
+    <code>Model: {{ model | json }}</code>
+  </div>
+
+
+  <div *ngIf="model">
+    <code>Model: {{ model.year }}</code>
+  </div>
+
+  <!-- <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+  <owl-date-time #dt1></owl-date-time> -->
+
+
+
+
+
+</div>

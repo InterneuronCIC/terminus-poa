@@ -1,0 +1,462 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div *ngIf="selectedView === 'assessments'">
+
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedassessments">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right"
+              (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedassessments">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="card-header bg-white text-dark">
+
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="text-dark">
+            <span *ngIf="appService.lockedOrBlocked">
+              <fa name="lock" class="text-info"></fa> &nbsp;
+            </span>
+            Assessments
+          </h4>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+              <!-- <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewPrevious()"
+                *ngIf="!appService.lockedOrBlocked">
+                <fa name="clock-o"></fa> Previous POAs
+              </button> -->
+            </div>
+            <div class="col-md-4">
+              <!-- <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewHistory()">
+                <fa name="check-square"></fa> Audit
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-body">
+
+
+
+      <div class="card">
+        <div class="card-header bg-light text-dark">
+          <div class="row">
+            <div class="col-md-9">
+              <h6>
+                AKI
+              </h6>
+
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-info btn-block btn-sm text-white"
+                (click)="gotoView('aki')">Assessment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="poaSummary">
+            <table class="table table-bordered table-sm">
+              <tr>
+                <td>AKI Status</td>
+                <td>
+                  {{poaSummary.akistatus}}
+                </td>
+              </tr>
+              <tr>
+                <td>Predicted AKI Risk (%)</td>
+                <td>
+                  {{poaSummary.akirisk}}
+                </td>
+              </tr>
+              <tr>
+                <td>Additional Risk Factors</td>
+                <td>
+                  {{poaSummary.akiadditionalriskfactors}}
+                </td>
+              </tr>
+              <tr>
+                <td>Guidance</td>
+                <td>
+                  {{poaSummary.akiguidance}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-light text-dark">
+          <div class="row">
+            <div class="col-md-9">
+              <h6>
+                SORT
+              </h6>
+
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-info btn-block btn-sm text-white"
+                (click)="gotoView('sort')">Assessment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="poaSummary">
+            <table class="table table-bordered table-sm">
+              <tr>
+                <td>SORT Status</td>
+                <td>
+                  {{poaSummary.sortstatus}}
+                </td>
+              </tr>
+              <tr>
+                <td>Estimated risk of 30 day mortality(%)</td>
+                <td>
+                  {{poaSummary.sortrisk}}
+                </td>
+              </tr>
+              <tr>
+                <td>Notes</td>
+                <td>
+                  {{poaSummary.sortnotes}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-light text-dark">
+          <div class="row">
+            <div class="col-md-9">
+              <h6>
+                Rockwood Clinical Frailty
+                Scale
+              </h6>
+
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-info btn-block btn-sm text-white"
+                (click)="gotoView('frailty')">Assessment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="poaSummary">
+            <table class="table table-bordered table-sm">
+              <tr>
+                <td>Assessment Required</td>
+                <td>
+                  {{poaSummary.frailtyrequired | titlecase}}
+                </td>
+              </tr>
+              <tr>
+                <td>Aged 60+</td>
+                <td>
+                  {{poaSummary.frailtysixtyplus | titlecase}}
+                </td>
+              </tr>
+              <tr>
+                <td>Rockwood Clinical Frailty
+                  Scale Score</td>
+                <td>
+                  {{poaSummary.frailtyscore}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-light text-dark">
+          <div class="row">
+            <div class="col-md-9">
+              <h6>
+                Cognitive Screening
+                Tool
+              </h6>
+
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-info btn-block btn-sm text-white"
+                (click)="gotoView('cognitive')">Assessment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="poaSummary">
+            <table class="table table-bordered table-sm">
+              <tr>
+                <td>Assessment Required</td>
+                <td>
+                  {{poaSummary.cognitiverequired | titlecase}}
+                </td>
+              </tr>
+              <tr>
+                <td>Reasons for assessment</td>
+                <td>
+
+                  <!-- <div *ngFor="let p of kvp">
+                    {{p.key}} {{p.value}}
+                  </div> -->
+
+                  <div *ngFor="let item of kvp | keyvalue">
+                    <div *ngIf="item.value">
+                      <fa name="check"></fa> {{item.key}}
+                    </div>
+                  </div>
+
+                  <!-- <div *ngFor="let poa of poaSummary.cognitivecriteria | json">
+                    {{poa}}
+                  </div> -->
+                </td>
+              </tr>
+              <tr>
+                <td>Patient has a formal diagnosis of dementia?</td>
+                <td>
+                  {{poaSummary.cognitivedementiadiagnosis | titlecase}}
+                </td>
+              </tr>
+              <tr>
+                <td>6 CIT Score</td>
+                <td>
+                  {{poaSummary.cognitivecitscore}}
+                </td>
+              </tr>
+              <tr>
+                <td>6 CIT Guidance</td>
+                <td>
+                  {{poaSummary.cognitivecitguidance}}
+                </td>
+              </tr>
+              <tr>
+                <td>Formal Carer (Other than next of kin) </td>
+                <td>
+                  {{poaSummary.cognitiveformalcarer}}
+                </td>
+              </tr>
+              <tr>
+                <td>Point of contact (Other than next of kin)</td>
+                <td>
+                  {{poaSummary.cognitivepointofcontact}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-light text-dark">
+          <div class="row">
+            <div class="col-md-9">
+              <h6>
+                Adult Malnutrition Screening Tool
+              </h6>
+
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-info btn-block btn-sm text-white"
+                (click)="gotoView('adultmalnutrition')">Assessment
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="poaSummary">
+            <table class="table table-bordered table-sm">
+              <tr>
+                <td>Score</td>
+                <td>
+                  {{poaSummary.malnutritionscore}}
+                </td>
+              </tr>
+              <tr>
+                <td>Guidance</td>
+                <td>
+                  {{poaSummary.malnutritionguidance}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- <div class="alert alert-success">
+        <strong>personId:</strong> {{ personId }}
+        <br />
+        <strong>poaId:</strong> {{ poaId }}
+      </div> -->
+
+      <!-- <button class="btn btn-success" (click)="save()">Save</button> -->
+
+    </div>
+
+    <!--
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-secondary btn-sm text-white" (click)="cancel()">
+            <fa name="arrow-left"></fa> Return to main menu
+          </button>
+        </div>
+        <div class="col-md-6">
+          <div *ngIf="selectedPOA && !appService.lockedOrBlocked">
+            <div *ngIf="selectedPOA.iscompletedassessments">
+              <button class="btn btn-sm btn-success btn-block text-white float-right"
+                (click)="markSectionCompleted(false)">
+                <fa name="check"></fa> Click here to remove Completed status
+              </button>
+            </div>
+            <div *ngIf="!selectedPOA.iscompletedassessments">
+              <button class="btn btn-sm btn-danger btn-block text-white float-right"
+                (click)="markSectionCompleted(true)">
+                <fa name="times"></fa> Click here to show Completed status
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+  </div>
+
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedassessments">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right"
+              (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedassessments">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <br />
+
+</div>
+
+
+<div *ngIf="selectedView === 'aki'">
+  <app-assessment-aki [preOpAssessment]="allergiesPOA" (allergiesPOAChange)="update()"
+    (assessmentsViewClosed)="onAssessmentsViewClosed($event)">
+  </app-assessment-aki>
+</div>
+
+<div *ngIf="selectedView === 'sort'">
+  <app-assessment-sort [preOpAssessment]="allergiesPOA" (allergiesPOAChange)="update()"
+    (assessmentsViewClosed)="onAssessmentsViewClosed($event)">
+  </app-assessment-sort>
+</div>
+
+<div *ngIf="selectedView === 'frailty'">
+  <app-assessment-frailty [preOpAssessment]="allergiesPOA" (allergiesPOAChange)="update()"
+    (assessmentsViewClosed)="onAssessmentsViewClosed($event)">
+  </app-assessment-frailty>
+</div>
+
+<div *ngIf="selectedView === 'cognitive'">
+  <app-assessment-cognitive [preOpAssessment]="allergiesPOA" (allergiesPOAChange)="update()"
+    (assessmentsViewClosed)="onAssessmentsViewClosed($event)">
+  </app-assessment-cognitive>
+</div>
+
+
+
+<div *ngIf="selectedView === 'adultmalnutrition'">
+  <app-assessment-adult-malnutrition [preOpAssessment]="allergiesPOA" (allergiesPOAChange)="update()"
+    (assessmentsViewClosed)="onAssessmentsViewClosed($event)">
+  </app-assessment-adult-malnutrition>
+</div>

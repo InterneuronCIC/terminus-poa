@@ -1,0 +1,630 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div *ngIf="selectedView === 'home'">
+
+
+  <button class="btn btn-info text-white" (click)="goBack()">
+    <fa name="arrow-left"></fa> Return to Preoperative Assessments List
+  </button>
+
+  <br /><br />
+
+  <div *ngIf="selectedPOA">
+    <div class="list-group" *ngIf="selectedPOA.poastatus !=  'Invalidated'">
+      <!-- <div class="alert border bg-white text-dark"> -->
+      <div id="divListGroupHolder" [ngClass]="{
+          'list-group-item list-group-item-warning border' : selectedPOA.poastatus == 'In Progress',
+          'list-group-item list-group-item-danger border' : selectedPOA.poastatus == 'Complete - Unfit to proceed',
+          'list-group-item list-group-item-success border' : selectedPOA.poastatus == 'Complete - Fit to proceed',
+          'list-group-item border' :  selectedPOA.poastatus == 'Please see anaesthetic ePOA – only baseline observations  recorded on this document',
+          'list-group-item border xxx' :  selectedPOA.poastatus == 'xxx'
+        }" style="padding: 7px; margin-bottom: 10px;">
+        <div class="row">
+          <div class="col-md-10">
+            <h6><strong class="text-dark">Assessment Date:</strong>
+              {{selectedPOA.poadate | date: 'dd/MM/yyyy'}}
+            </h6>
+          </div>
+          <div class="col-md-2">
+            <div *ngIf="appService.locked">
+              <div class="h6 text-info">
+                <fa name="lock" class="float-right"></fa>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h6><strong class="text-dark">Status:</strong> {{selectedPOA.poastatus}}</h6>
+        <h6><strong class="text-dark">Type:</strong> {{selectedPOA.poatype}}</h6>
+        <h6><strong class="text-dark">Operation:</strong> {{selectedPOA.operation}}</h6>
+        <h6 *ngIf="selectedPOA.completedby&& !selectedPOA.validatedby"><strong class="text-dark">Completed
+            By:</strong>
+          {{selectedPOA.completedby}}
+        </h6>
+        <h6 *ngIf="!selectedPOA.completedby"><span>Nurse completing not
+            recorded</span>
+        </h6>
+        <h6 *ngIf="selectedPOA.validatedby"><strong class="text-dark">Validated By:</strong>
+          {{selectedPOA.validatedby}}
+        </h6>
+        <div *ngIf="selectedPOA.hdurequired" class="text-danger">
+          <fa name="flag"></fa> HDU Required
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+
+    <div class="list-group" *ngIf="selectedPOA.poastatus ===  'Invalidated'">
+      <div class="alert border bg-white text-dark">
+        <h6 class="text-secondary"><strong class="text-dark">Assessment Date:</strong>
+          {{selectedPOA.poadate | date: 'dd/MM/yyyy'}}
+        </h6>
+        <h6 class="text-secondary"><strong class="text-dark">Status:</strong> {{selectedPOA.poastatus}}</h6>
+        <h6 class="text-secondary"><strong class="text-dark">Type:</strong> {{selectedPOA.poatype}}</h6>
+        <h6 class="text-secondary"><strong class="text-dark">Operation:</strong> {{selectedPOA.operation}}</h6>
+        <h6 class="text-secondary" *ngIf="selectedPOA.completedby && !selectedPOA.validatedby"><strong
+            class="text-dark">Completed By:</strong>
+          {{selectedPOA.completedby}}
+        </h6>
+        <h6 class="text-secondary" *ngIf="!selectedPOA.completedby"><strong class="text-secondary">Nurse completing not
+            recorded</strong>
+        </h6>
+        <h6 class="text-secondary" *ngIf="selectedPOA.validatedby"><strong class="text-dark">Validated By:</strong>
+          {{selectedPOA.validatedby}}
+        </h6>
+        <div *ngIf="selectedPOA.hdurequired" class="text-secondary">
+          <fa name="flag"></fa> HDU Required
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="selectedPOA">
+    <div class="card">
+      <div class="card-header bg-secondary text-dark">
+        <h5>
+          Main Menu
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="list-group" *ngIf="selectedPOA.poastatus !=  'Invalidated'">
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('general')">General
+            <span class="text-success" *ngIf="selectedPOA.iscompletedgeneral">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('medicalHistory')">Past
+            Medical History and Anaesthetic Issues<span class="text-success"
+              *ngIf="selectedPOA.iscompletedpastmedicalhistory">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('tasks')">Tasks and POA
+            Updates
+
+            <span class="badge badge-secondary badge-pill" *ngIf="taskCount">{{ taskCount.tasks }}</span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('baselineObservations')">Baseline Observations <span class="text-success"
+              *ngIf="selectedPOA.iscompletedbaselineobservations">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('allergies')">Allergies
+            <span class="text-success" *ngIf="selectedPOA.iscompletedallergies">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('medicationHistory')">Medication
+            History <span class="text-success" *ngIf="selectedPOA.iscompletedmedicationhistory">
+              <fa name="check"></fa>
+            </span>
+            <span class="text-success" *ngIf="selectedPOA.reviewedbypharmacist">
+              &nbsp;<fa name="check-square-o"></fa> Reviewed
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('surgicalHistory')">Surgical
+            History <span class="text-success" *ngIf="selectedPOA.iscompletedsurgicalhistory">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            *ngIf="selectedPOA.poatype == 'Face to face assessment'" (click)="gotoView('physicalExamination')">Physical
+            Examination <span class="text-success" *ngIf="selectedPOA.iscompletedphysicalexamination">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-secondary"
+            *ngIf="selectedPOA.poatype != 'Face to face assessment'">Physical
+            Examination (Not available)
+            <span class="float-right text-danger">
+              <fa name="phone"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('familyHistory')">Family
+            History <span class="text-success" *ngIf="selectedPOA.iscompletedfamilyhistory">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('socialHistory')">Social
+            History <span class="text-success" *ngIf="selectedPOA.iscompletedsocialhistory">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('assessments')">Assessments <span class="text-success"
+              *ngIf="selectedPOA.iscompletedassessments">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('infectionControl')">Infection Control <span class="text-success"
+              *ngIf="selectedPOA.iscompletedinfectioncontrol">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('informationProvided')">Information Provided <span class="text-success"
+              *ngIf="selectedPOA.iscompletedinformationprovided">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('notes')">Notes
+            <span class="badge badge-secondary badge-pill" *ngIf="noteCount">{{ noteCount.notes }}</span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('nursingAssessment')">Fitness Outcome <span class="text-success"
+              *ngIf="selectedPOA.iscompletednursingassessment">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+
+
+        </div>
+
+        <br />
+
+        <div class="list-group">
+          <button type="button" class="list-group-item list-group-item-action text-dark"
+            (click)="gotoView('print')">Print
+            View
+            <span class="float-right">
+              <fa name="print"></fa>
+            </span>
+            <span class="text-success" *ngIf="selectedPOA.isprinted">
+              &nbsp;<fa name="print"></fa> Printed
+            </span>
+          </button>
+        </div>
+
+        <br />
+
+        <div class="list-group" *ngIf="selectedPOA.poastatus ===  'Invalidated'">
+          <button type="button" class="list-group-item list-group-item-action" (click)="gotoView('general')">General
+            <span class="text-success" *ngIf="selectedPOA.iscompletedgeneral">
+              <fa name="check"></fa>
+            </span>
+            <span class="float-right">
+              <fa name="arrow-right"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Past Medical
+            History and
+            Anaesthetic Issues
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Tasks and POA
+            Updates
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">
+            Baseline Observations
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Allergies
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Medication
+            History
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Surgical
+            History
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Physical
+            Examination
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Family
+            History
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Social
+            History
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Assessments
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Infection
+            Control
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Information
+            Provided
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Notes
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+          <button type="button" class="list-group-item list-group-item-actiontext-secondary">Fitness Outcome
+            <span class="float-right">
+              <fa name="times"></fa>
+            </span>
+          </button>
+        </div>
+
+        <div style="font-size: 0.7em; font-style: italic; margin-top: 100px;" hidden>
+          <div *ngIf="appService.blocked">
+            <br />
+            <div class="border rounded bg-light text-dark" style="padding: 7px;">
+              <strong>Your Permissions:</strong>
+              <ul>
+                <li>View all POA sections</li>
+                <li>Create and Edit Tasks</li>
+              </ul>
+            </div>
+          </div>
+          <div *ngIf="!appService.blocked">
+            <br />
+            <div class="border rounded bg-light text-dark" style="padding: 7px;">
+              <strong>Your permissions:</strong>
+              <ul>
+                <li>Full access to all POA functionality</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="userSettings">
+
+          <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action text-dark"
+              (click)="toggleShowSettings()" *ngIf="!showSettings">User
+              Settings
+              <span class="float-right">
+                <fa name="gear"></fa>
+              </span>
+            </button>
+
+            <button type="button" class="list-group-item list-group-item-action text-dark"
+              (click)="toggleShowSettings()" *ngIf="showSettings">
+              User Settings
+              <span class="float-right text-danger">
+                <fa name="times"></fa>
+              </span>
+            </button>
+
+            <div *ngIf="showSettings">
+              <div class="list-group-item list-group-item-action text-dark">
+                <!-- <div class="row">
+                  <div class="col-md-6">
+                    <h6>
+                      <fa name="gear"></fa> Settings
+                    </h6>
+                  </div>
+                  <div class="col-md-6">
+                    <button type="button" class="close float-right" (click)="toggleShowSettings()"
+                      style="margin-top: -6px;">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
+
+                <hr /> -->
+
+                <br />
+
+                <div class="row">
+                  <div class="col-md-10">
+                    <label>Show confirmation prompts</label>
+                  </div>
+                  <div class="col-md-2">
+                    <div *ngIf="userSettings">
+                      <button *ngIf="userSettings.displaywarnings" class="btn btn-success btn-block btn-sm"
+                        (click)="toggleShowWarnings()">
+                        <fa name="check"></fa> Yes
+                      </button>
+                      <button *ngIf="!userSettings.displaywarnings" class="btn btn-danger btn-block btn-sm"
+                        (click)="toggleShowWarnings()">
+                        <fa name="times"> </fa> No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <br />
+
+                <div class="alert alert-success" *ngIf="userSettings.displaywarnings">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <h3>
+                        <fa name="info-circle"></fa>
+                      </h3>
+                    </div>
+                    <div class="col-md-11">
+                      <small>Confirmation prompts will be shown when performing certain tasks such as clicking the back
+                        button and generating certain tasks</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert alert-danger" *ngIf="!userSettings.displaywarnings">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <h3>
+                        <fa name="exclamation-triangle"></fa>
+                      </h3>
+                    </div>
+                    <div class="col-md-11">
+                      <small>Confirmation prompts will <span style="text-decoration: underline;">not</span> be shown
+                        when
+                        performing certain tasks such as clicking the back button and generating certain tasks</small>
+                    </div>
+                  </div>
+                </div>
+
+                <br />
+
+                <div class="row">
+                  <div class="col-md-10">
+                    <label>Auto proceed to next section</label>
+                  </div>
+                  <div class="col-md-2">
+                    <div *ngIf="userSettings">
+                      <button *ngIf="userSettings.autoproceedtonextsection" class="btn btn-success btn-block btn-sm"
+                        (click)="toggleAutoProceed()">
+                        <fa name="check"></fa> Yes
+                      </button>
+                      <button *ngIf="!userSettings.autoproceedtonextsection" class="btn btn-danger btn-block btn-sm"
+                        (click)="toggleAutoProceed()">
+                        <fa name="times"> </fa> No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <br />
+
+                <div class="alert alert-success" *ngIf="userSettings.autoproceedtonextsection">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <h3>
+                        <fa name="info-circle"></fa>
+                      </h3>
+                    </div>
+                    <div class="col-md-11">
+                      <small>When clicking 'Save' you will automatically be taken to the next section</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert alert-danger" *ngIf="!userSettings.autoproceedtonextsection">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <h3>
+                        <fa name="exclamation-triangle"></fa>
+                      </h3>
+                    </div>
+                    <div class="col-md-11">
+                      <small>When clicking 'Save' you will remain on the current page</small>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+  <br /><br />
+
+
+
+
+</div>
+
+
+<div *ngIf="selectedView === 'general'">
+  <app-general [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-general>
+</div>
+
+
+<div *ngIf="selectedView === 'medicalHistory'">
+  <app-past-medical-history [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-past-medical-history>
+</div>
+
+
+<div *ngIf="selectedView === 'allergies'">
+  <app-allergies [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)"></app-allergies>
+</div>
+
+
+<div *ngIf="selectedView === 'medicationHistory'">
+  <app-medicine-history [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-medicine-history>
+</div>
+
+<div *ngIf="selectedView === 'surgicalHistory'">
+  <app-surgical-history [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-surgical-history>
+</div>
+
+<div *ngIf="selectedView === 'physicalExamination'">
+  <app-physical-examination [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-physical-examination>
+</div>
+
+<div *ngIf="selectedView === 'familyHistory'">
+  <app-family-history [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-family-history>
+</div>
+
+<div *ngIf="selectedView === 'socialHistory'">
+  <app-social-history [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-social-history>
+</div>
+
+<div *ngIf="selectedView === 'infectionControl'">
+  <app-infection-control [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-infection-control>
+</div>
+
+<div *ngIf="selectedView === 'informationProvided'">
+  <app-information-provided [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-information-provided>
+</div>
+
+<div *ngIf="selectedView === 'nursingAssessment'">
+  <app-nursing-assessment [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-nursing-assessment>
+</div>
+
+
+<div *ngIf="selectedView === 'baselineObservations'">
+  <app-baseline-observations [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-baseline-observations>
+</div>
+
+<div *ngIf="selectedView === 'notes'">
+  <app-notes [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-notes>
+</div>
+
+
+<div *ngIf="selectedView === 'tasks'">
+  <app-tasks [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-tasks>
+</div>
+
+<div *ngIf="selectedView === 'assessments'">
+  <app-assessments [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-assessments>
+</div>
+
+<div *ngIf="selectedView === 'print'">
+  <app-print-view [preOpAssessment]="homePOA" (poaChange)="update()" (viewClosed)="onViewClosed($event)">
+  </app-print-view>
+</div>

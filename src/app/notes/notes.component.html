@@ -1,0 +1,254 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div *ngIf="selectedNotesView === 'notes'">
+
+  <div class="alert alert-secondary">
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+          <fa name="arrow-left"></fa> Back
+        </button>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+          <fa name="bars"></fa> Main menu
+        </button>
+      </div>
+      <div class="col-md-6">
+        <!-- <div *ngIf="selectedPOA && !appService.blocked">
+          <div *ngIf="selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
+              <fa name="check"></fa> Click here to remove Completed status
+            </button>
+          </div>
+          <div *ngIf="!selectedPOA.iscompletedgeneral">
+            <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+              <fa name="times"></fa> Click here to show Completed status
+            </button>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+          Next <fa name="arrow-right"></fa>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="card-header bg-white text-dark">
+
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="text-dark">
+            <span *ngIf="appService.lockedOrBlocked">
+              <fa name="lock" class="text-info"></fa> &nbsp;
+            </span>
+            Notes
+          </h4>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+              <!-- <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewPrevious()"
+                *ngIf="!appService.lockedOrBlocked">
+                <fa name="clock-o"></fa> Previous POAs
+              </button> -->
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-block btn-outline-dark btn-sm" (click)="addNew($event)">
+                <fa name="plus"></fa> Add Note
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card-body">
+
+
+      <label style="font-style: italic; font-weight: bold; font-size: 0.8em;" class="text-dark" for="staffFilter">Filter
+        notes by:</label>
+      <select name="staffFilter" id="staffFilter" class="form-control form-control-sm" [(ngModel)]="staffFilter">
+        <option value="All">All Staff Groups</option>
+        <option *ngFor="let opt of staffGroups" [value]="opt.groupname">{{ opt.groupname }}</option>
+      </select>
+
+
+
+      <div *ngIf="staffFilter != ''">
+
+
+
+
+
+        <div class="list-group" *ngFor="let poa of filteredNotes">
+          <br />
+
+          <div class="bg-light border" style="padding: 6px; text-align: left;">
+            <small class="text-info">{{poa.poa_staffgroup_id}}</small>
+          </div>
+
+          <div class="bg-white border" style="padding: 6px; text-align: left; white-space: pre-wrap;"
+            [innerHTML]="poa.notes"></div>
+
+          <div class="bg-light border" style="padding: 6px; text-align: right;">
+            <i>
+              <small class="text-info">Created by </small>
+              <small>{{poa._createdby}}</small>
+              <small class="text-info"> at </small>
+              <small>{{poa._createddate  | date: 'dd/MM/yyyy HH:mm a'}}</small>
+            </i>
+          </div>
+
+
+        </div>
+
+
+
+        <div *ngIf="filteredNotes?.length == 0">
+          <br />
+          <div class="alert alert-info">
+            No notes for the selected filter
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+      <!-- <button class="btn btn-success" (click)="save()">Save</button> -->
+
+    </div>
+
+
+    <div class="alert alert-secondary">
+      <div class="row">
+        <div class="col-md-2">
+          <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
+            <fa name="arrow-left"></fa> Back
+          </button>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
+            <fa name="bars"></fa> Main menu
+          </button>
+        </div>
+        <div class="col-md-6">
+          <!-- <div *ngIf="selectedPOA && !appService.blocked">
+            <div *ngIf="selectedPOA.iscompletedgeneral">
+              <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
+                <fa name="check"></fa> Click here to remove Completed status
+              </button>
+            </div>
+            <div *ngIf="!selectedPOA.iscompletedgeneral">
+              <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
+                <fa name="times"></fa> Click here to show Completed status
+              </button>
+            </div>
+          </div> -->
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
+            Next <fa name="arrow-right"></fa>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+
+  </div>
+</div>
+
+<div *ngIf="selectedNotesView === 'new'">
+  <button class="btn btn-info text-white" (click)="cancelNew()">
+    <fa name="times"></fa> Cancel
+  </button>
+  <br /><br />
+
+  <div class="card">
+    <div class="card-header bg-secondary text-dark">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>
+            New Pre-Op Note
+          </h5>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+
+      <form #newNoteForm="ngForm">
+
+        <div class="form-group">
+          <label for="poa_staffgroup_id">Originator: Select Staff Group:</label>
+          <select name="poa_staffgroup_id" id="poa_staffgroup_id" class="form-control"
+            [(ngModel)]="poaNote.poa_staffgroup_id" required #poa_staffgroup_id="ngModel">
+            <option value=null>Please select . . . . </option>
+            <option *ngFor="let opt of staffGroups" value="{{ opt.poa_staffgroup_id }}">
+              {{ opt.groupname }}
+            </option>
+          </select>
+          <div [hidden]="poa_staffgroup_id.valid" class="text-danger">
+            <small><i>&nbsp;&nbsp;*Staff Group is required</i></small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Note:</label>
+          <textarea [(ngModel)]="poaNote.notes" name="notes" id="notes" required #notes="ngModel" class="form-control"
+            rows="10">
+
+         </textarea>
+          <div [hidden]="notes.valid" class="text-danger">
+            <small> <i>&nbsp;&nbsp;*Notes is required</i></small>
+          </div>
+        </div>
+
+        <hr />
+
+        <button class="btn btn-info text-white btn-block" (click)="saveNew()" [disabled]="!newNoteForm.form.valid">
+          Save
+        </button>
+
+
+      </form>
+
+
+    </div>
+  </div>
+</div>

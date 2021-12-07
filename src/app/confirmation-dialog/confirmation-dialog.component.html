@@ -1,0 +1,39 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="modal-header">
+  <h5 class="modal-title text-dark">{{ title }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <span class="text-dark">
+    {{ message }}
+  </span>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary btn-sm" (click)="decline()">
+    <fa name="times"></fa> {{ btnCancelText }}
+  </button>
+  <button type="button" class="btn btn-primary btn-sm" (click)="accept()" ngbAutofocus>
+    <fa name="check"></fa> {{ btnOkText }}
+  </button>
+</div>

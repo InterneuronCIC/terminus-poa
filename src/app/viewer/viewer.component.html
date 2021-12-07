@@ -1,0 +1,133 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2021  Interneuron CIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div *ngIf="person.fullname != null">
+
+  <div *ngIf="selectedView === 'viewer'">
+
+    <!-- <button (click)="hideScrollBar(true)">Hide</button> -->
+
+
+    <button class="btn btn-info text-white btn-xs float-right" (click)="createNewPOA()"
+      *ngIf="!appService.blocked">Create New POA</button>
+
+    <br /><br />
+
+    <div class="list-group" *ngFor="let poa of preOpAssessmentList">
+      <div id="divListGroupHolderMain" [ngClass]="{
+        'list-group-item list-group-item-action list-group-item-warning border' : poa.poastatus == 'In Progress',
+        'list-group-item list-group-item-action list-group-item-danger border' : poa.poastatus == 'Complete - Unfit to proceed',
+        'list-group-item list-group-item-action list-group-item-success border' : poa.poastatus == 'Complete - Fit to proceed',
+        'list-group-item list-group-item-action border' :  poa.poastatus == 'Please see anaesthetic ePOA – only baseline observations  recorded on this document',
+        'list-group-item list-group-item-action text-secondary border' :  poa.poastatus == 'Invalidated',
+        'list-group-item list-group-item-action border xxx' :  poa.poastatus == 'xxx'
+      }" (click)="selectPOA(poa.poa_preopassessment_id)"
+        style="padding:7px; border: 1px solid #f0f0f0; cursor: pointer;">
+
+        <div>
+
+          <div class="row">
+            <div class="col-md-11">
+              <div class="list-group">
+
+
+
+                <h6><strong class="text-dark">Assessment Date:</strong>
+                  {{poa.poadate | date:'dd/MM/yyyy'}}</h6>
+                <h6><strong class="text-dark">Status:</strong> {{poa.poastatus}}</h6>
+                <h6><strong class="text-dark">Type:</strong> {{poa.poatype}}</h6>
+                <h6><strong class="text-dark">Operation:</strong> {{poa.operation}}</h6>
+                <h6 *ngIf="poa.completedby && !poa.validatedby"><strong class="text-dark">Completed
+                    By:</strong>
+                  {{poa.completedby}}
+                </h6>
+                <h6 *ngIf="!poa.completedby"><span>Nurse completing not
+                    recorded</span>
+                </h6>
+                <h6 *ngIf="poa.validatedby"><strong class="text-dark">Validated By:</strong>
+                  {{poa.validatedby}}
+                </h6>
+                <div *ngIf="poa.tasks > 0">
+                  <strong>Uncompleted Tasks: &nbsp;</strong> <span class="badge badge-info"> {{ poa.tasks }} </span>
+                </div>
+                <div *ngIf="poa.hdurequired" class="text-danger">
+                  <fa name="flag"></fa> HDU Required
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-1">
+              <span class="float-right">
+                <fa name="arrow-right"></fa>
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="preOpAssessmentList?.length == 0">
+      <div class="alert alert-info">
+        No Pre-operative Assessments for this patient
+      </div>
+    </div>
+
+    <div style="font-size: 0.7em; font-style: italic; margin-top: 100px;" hidden>
+      <div *ngIf="appService.blocked">
+        <br />
+        <div class="border rounded bg-light text-dark" style="padding: 7px;">
+          <strong>Your Permissions:</strong>
+          <ul>
+            <li>View all POA sections</li>
+            <li>Create and Edit Tasks</li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="!appService.blocked">
+        <br />
+        <div class="border rounded bg-light text-dark" style="padding: 7px;">
+          <strong>Your permissions:</strong>
+          <ul>
+            <li>Full access to all POA functionality</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="selectedView === 'home'">
+    <app-home [preOpAssessment]="preOpAssessment" (poaChange)="update()"></app-home>
+  </div>
+
+  <div *ngIf="selectedView === 'medicationHistory'">
+    <app-medicationhistory></app-medicationhistory>
+  </div>
+
+  <div *ngIf="selectedView === 'dynamicForm'">
+    <app-dynamic-form-renderer [person]="person" (personChange)="update()"></app-dynamic-form-renderer>
+  </div>
+
+
+</div>
