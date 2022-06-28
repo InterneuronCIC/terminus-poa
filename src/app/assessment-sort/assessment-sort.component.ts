@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -440,7 +440,7 @@ export class AssessmentSORTComponent implements OnDestroy {
 
 
 
-    //{"sortAssessmentStatus":"","sortAssessmentNotes":"","configCareRecordURL":"SYNAPSE_DYNAMIC_URI","configAutonomicURL":"SYNAPSE_DYNAMIC_URI","configTerminologyURL":"SYNAPSE_DYNAMIC_URI","configImageServerURL":"https://imagerserver.z16.web.core.windows.net/","new":"new"}
+    //{"sortAssessmentStatus":"","sortAssessmentNotes":"","configCareRecordURL":"https://synapsedynamicapi.dev.interneuron.io","configAutonomicURL":"https://synapsedynamicapi.dev.interneuron.io","configTerminologyURL":"https://synapsedynamicapi.dev.interneuron.io","configImageServerURL":"https://imagerserver.z16.web.core.windows.net/","new":"new"}
 
 
 

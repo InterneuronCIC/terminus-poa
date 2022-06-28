@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 <!--END LICENSE BLOCK--> 
 <div class="modal-header bg-info text-white">
   <h5 class="modal-title">
-    <fa name="clock-o"></fa> Previous POAs - {{ title }}
+    <i class="fa fa-clock-o" aria-hidden="true"></i> Previous POAs - {{ title }}
   </h5>
 
   <button type="button" class="close" aria-label="Close" (click)="dismiss()">
@@ -36,7 +36,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <div class="row">
           <div class="col-md-2">
             <button class="btn btn-info text-white" (click)="backToList()">
-              <fa name="chevron-left"></fa> Back
+              <i class="fa fa-chevron-left"></i> Back
             </button>
           </div>
           <div class="col-md-5">
@@ -73,7 +73,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
               </div> -->
                 <div class="col-md-1" style="padding-top:2px;">
                   <span class="float-right text-dark">
-                    <fa name="arrow-right"></fa>
+                    <i class="fa fa-arrow-right"></i>
                   </span>
                 </div>
               </div>
@@ -105,7 +105,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <h5 class="text-dark">Import this POA - {{ title }}</h5>
 
         <div class="alert alert-danger">
-          <fa name="exclamation-triangle"></fa> This will overide all previous entered data for this section.
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> This will overide all previous entered data for this section.
         </div>
 
         <div class="form-group">
@@ -121,7 +121,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div class="col-md-12">
             <button type="button" class="btn btn-success btn-lg btn-lg btn-block float-right" (click)="accept()"
               *ngIf="userAcknowledged">
-              <fa name="download"></fa> {{ btnOkText }}
+              <i class="fa fa-download" aria-hidden="true"></i> {{ btnOkText }}
             </button>
           </div>
         </div>
@@ -143,7 +143,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <h5 class="text-dark">Import this POA - {{ title }}</h5>
 
         <div class="alert alert-danger">
-          <fa name="exclamation-triangle"></fa> This will overide all previous entered data for this section.
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> This will overide all previous entered data for this section.
         </div>
 
         <div class="form-group">
@@ -159,7 +159,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div class="col-md-12">
             <button type="button" class="btn btn-success btn-lg btn-lg btn-block float-right" (click)="accept()"
               *ngIf="userAcknowledged">
-              <fa name="download"></fa> {{ btnOkText }}
+              <i class="fa fa-download" aria-hidden="true"></i> {{ btnOkText }}
             </button>
           </div>
         </div>
@@ -175,7 +175,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
       <div class="row">
         <div class="col-md-6">
           <button class="btn btn-info text-white" (click)="backToList()" ngbAutofocus>
-            <fa name="chevron-left"></fa> Back
+            <i class="fa fa-chevron-left"></i> Back
           </button>
         </div>
         <div class="col-md-6">
@@ -191,10 +191,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 </div>
 <div class="modal-footer">
   <!-- <button type="button" class="btn btn-secondary btn-sm" (click)="decline()">
-    <fa name="times"></fa> {{ btnCancelText }}
+    <i class="fa fa-times" aria-hidden="true"></i> {{ btnCancelText }}
   </button>
   <button type="button" class="btn btn-primary btn-sm" (click)="accept()" ngbAutofocus>
-    <fa name="check"></fa> {{ btnOkText }}
+    <i class="fa fa-check" aria-hidden="true"></i> {{ btnOkText }}
   </button> -->
 </div>
 

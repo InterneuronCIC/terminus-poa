@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 <div class="row">
   <div class="col-md-6">
     <button class="btn btn-info text-white" (click)="cancel()">
-      <fa name="check"></fa> Done
+      <i class="fa fa-check" aria-hidden="true"></i> Done
     </button>
 
   </div>
   <div class="col-md-6">
 
     <!-- <span *ngIf="selectedPOA.reviewedbypharmacist" class="text-success float-right">
-      <fa name="check-square-o"></fa> Reviewed on {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy'}}
+      <i class="fa fa-check-square-o" aria-hidden="true"></i> Reviewed on {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy'}}
     </span>
 
     <span *ngIf="!selectedPOA.reviewedbypharmacist" class="text-danger float-right">
@@ -52,7 +52,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <div *ngIf="selectedPOA">
           <div *ngIf="selectedPOA.reviewedbypharmacist">
             <button class="btn btn-sm btn-success btn-block text-white float-right"
-              (click)="markReviewed(false)">Reviewed by Pharmacy <fa name="check-square-o"></fa></button>
+              (click)="markReviewed(false)">Reviewed by Pharmacy <i class="fa fa-check-square-o" aria-hidden="true"></i></button>
           </div>
           <div *ngIf="!selectedPOA.reviewedbypharmacist">
             <button class="btn btn-sm btn-danger btn-block text-white float-right" (click)="markReviewed(true)">Not
@@ -66,7 +66,8 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 
     <div *ngIf="selectedPOA" style="margin-top: -15px;">
       <span *ngIf="selectedPOA.reviewedbypharmacist" class="text-success">
-        <fa name="check-square-o"></fa> Reviewed on {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy HH:mma'}}
+        <!-- <i class="fa fa-check-square-o" aria-hidden="true"></i> -->
+        <i class="fa fa-check-square-o" aria-hidden="true"></i> Reviewed on {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy HH:mma'}}
         ({{selectedPOA.reviewedbypharmacistuser}})
       </span>
 

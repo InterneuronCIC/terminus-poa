@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 
 
   <button class="btn btn-info text-white" (click)="goBack()">
-    <fa name="arrow-left"></fa> Return to Preoperative Assessments List
+    <i class="fa fa-arrow-left"></i> Return to Preoperative Assessments List
   </button>
 
   <br /><br />
@@ -46,7 +46,8 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div class="col-md-2">
             <div *ngIf="appService.locked">
               <div class="h6 text-info">
-                <fa name="lock" class="float-right"></fa>
+                <!-- <fa name="lock" class="float-right"></fa> -->
+                <i class="fa fa-lock text-info float-right"></i>
               </div>
             </div>
           </div>
@@ -65,7 +66,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           {{selectedPOA.validatedby}}
         </h6>
         <div *ngIf="selectedPOA.hdurequired" class="text-danger">
-          <fa name="flag"></fa> HDU Required
+          <i class="fa fa-flag" aria-hidden="true"></i> HDU Required
         </div>
       </div>
       <!-- </div> -->
@@ -90,7 +91,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           {{selectedPOA.validatedby}}
         </h6>
         <div *ngIf="selectedPOA.hdurequired" class="text-secondary">
-          <fa name="flag"></fa> HDU Required
+          <i class="fa fa-flag" aria-hidden="true"></i> HDU Required
         </div>
       </div>
     </div>
@@ -110,20 +111,20 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('general')">General
             <span class="text-success" *ngIf="selectedPOA.iscompletedgeneral">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('medicalHistory')">Past
             Medical History and Anaesthetic Issues<span class="text-success"
               *ngIf="selectedPOA.iscompletedpastmedicalhistory">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
@@ -132,123 +133,123 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 
             <span class="badge badge-secondary badge-pill" *ngIf="taskCount">{{ taskCount.tasks }}</span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('baselineObservations')">Baseline Observations <span class="text-success"
               *ngIf="selectedPOA.iscompletedbaselineobservations">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('allergies')">Allergies
             <span class="text-success" *ngIf="selectedPOA.iscompletedallergies">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('medicationHistory')">Medication
             History <span class="text-success" *ngIf="selectedPOA.iscompletedmedicationhistory">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="text-success" *ngIf="selectedPOA.reviewedbypharmacist">
-              &nbsp;<fa name="check-square-o"></fa> Reviewed
+              &nbsp;<i class="fa fa-check-square-o" aria-hidden="true"></i> Reviewed
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('surgicalHistory')">Surgical
             History <span class="text-success" *ngIf="selectedPOA.iscompletedsurgicalhistory">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             *ngIf="selectedPOA.poatype == 'Face to face assessment'" (click)="gotoView('physicalExamination')">Physical
             Examination <span class="text-success" *ngIf="selectedPOA.iscompletedphysicalexamination">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-secondary"
             *ngIf="selectedPOA.poatype != 'Face to face assessment'">Physical
             Examination (Not available)
             <span class="float-right text-danger">
-              <fa name="phone"></fa>
+              <i class="fa fa-phone" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('familyHistory')">Family
             History <span class="text-success" *ngIf="selectedPOA.iscompletedfamilyhistory">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('socialHistory')">Social
             History <span class="text-success" *ngIf="selectedPOA.iscompletedsocialhistory">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('assessments')">Assessments <span class="text-success"
               *ngIf="selectedPOA.iscompletedassessments">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('infectionControl')">Infection Control <span class="text-success"
               *ngIf="selectedPOA.iscompletedinfectioncontrol">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('informationProvided')">Information Provided <span class="text-success"
               *ngIf="selectedPOA.iscompletedinformationprovided">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('notes')">Notes
             <span class="badge badge-secondary badge-pill" *ngIf="noteCount">{{ noteCount.notes }}</span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-action text-dark"
             (click)="gotoView('nursingAssessment')">Fitness Outcome <span class="text-success"
               *ngIf="selectedPOA.iscompletednursingassessment">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
 
@@ -262,10 +263,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
             (click)="gotoView('print')">Print
             View
             <span class="float-right">
-              <fa name="print"></fa>
+              <i class="fa fa-print" aria-hidden="true"></i>
             </span>
             <span class="text-success" *ngIf="selectedPOA.isprinted">
-              &nbsp;<fa name="print"></fa> Printed
+              &nbsp;<i class="fa fa-print" aria-hidden="true"></i> Printed
             </span>
           </button>
         </div>
@@ -275,91 +276,91 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <div class="list-group" *ngIf="selectedPOA.poastatus ===  'Invalidated'">
           <button type="button" class="list-group-item list-group-item-action" (click)="gotoView('general')">General
             <span class="text-success" *ngIf="selectedPOA.iscompletedgeneral">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </span>
             <span class="float-right">
-              <fa name="arrow-right"></fa>
+              <i class="fa fa-arrow-right"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Past Medical
             History and
             Anaesthetic Issues
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Tasks and POA
             Updates
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">
             Baseline Observations
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Allergies
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Medication
             History
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Surgical
             History
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Physical
             Examination
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Family
             History
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Social
             History
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Assessments
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Infection
             Control
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Information
             Provided
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Notes
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
           <button type="button" class="list-group-item list-group-item-actiontext-secondary">Fitness Outcome
             <span class="float-right">
-              <fa name="times"></fa>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </span>
           </button>
         </div>
@@ -393,7 +394,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
               (click)="toggleShowSettings()" *ngIf="!showSettings">User
               Settings
               <span class="float-right">
-                <fa name="gear"></fa>
+                <i class="fa fa-gear"></i>
               </span>
             </button>
 
@@ -401,7 +402,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
               (click)="toggleShowSettings()" *ngIf="showSettings">
               User Settings
               <span class="float-right text-danger">
-                <fa name="times"></fa>
+                <i class="fa fa-times" aria-hidden="true"></i>
               </span>
             </button>
 
@@ -410,7 +411,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                 <!-- <div class="row">
                   <div class="col-md-6">
                     <h6>
-                      <fa name="gear"></fa> Settings
+                      <i class="fa fa-gear"></i> Settings
                     </h6>
                   </div>
                   <div class="col-md-6">
@@ -433,11 +434,11 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                     <div *ngIf="userSettings">
                       <button *ngIf="userSettings.displaywarnings" class="btn btn-success btn-block btn-sm"
                         (click)="toggleShowWarnings()">
-                        <fa name="check"></fa> Yes
+                        <i class="fa fa-check" aria-hidden="true"></i> Yes
                       </button>
                       <button *ngIf="!userSettings.displaywarnings" class="btn btn-danger btn-block btn-sm"
                         (click)="toggleShowWarnings()">
-                        <fa name="times"> </fa> No
+                        <i class="fa fa-times" aria-hidden="true"></i> No
                       </button>
                     </div>
                   </div>
@@ -449,7 +450,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                   <div class="row">
                     <div class="col-md-1">
                       <h3>
-                        <fa name="info-circle"></fa>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
                       </h3>
                     </div>
                     <div class="col-md-11">
@@ -463,7 +464,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                   <div class="row">
                     <div class="col-md-1">
                       <h3>
-                        <fa name="exclamation-triangle"></fa>
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                       </h3>
                     </div>
                     <div class="col-md-11">
@@ -484,11 +485,11 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                     <div *ngIf="userSettings">
                       <button *ngIf="userSettings.autoproceedtonextsection" class="btn btn-success btn-block btn-sm"
                         (click)="toggleAutoProceed()">
-                        <fa name="check"></fa> Yes
+                        <i class="fa fa-check" aria-hidden="true"></i> Yes
                       </button>
                       <button *ngIf="!userSettings.autoproceedtonextsection" class="btn btn-danger btn-block btn-sm"
                         (click)="toggleAutoProceed()">
-                        <fa name="times"> </fa> No
+                        <i class="fa fa-times" aria-hidden="true"></i> No
                       </button>
                     </div>
                   </div>
@@ -500,7 +501,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                   <div class="row">
                     <div class="col-md-1">
                       <h3>
-                        <fa name="info-circle"></fa>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
                       </h3>
                     </div>
                     <div class="col-md-11">
@@ -513,7 +514,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                   <div class="row">
                     <div class="col-md-1">
                       <h3>
-                        <fa name="exclamation-triangle"></fa>
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                       </h3>
                     </div>
                     <div class="col-md-11">

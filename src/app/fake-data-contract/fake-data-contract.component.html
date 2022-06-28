@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,8 +20,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 <!--END LICENSE BLOCK--> 
 <div class="row text-secondary">
   <div class="col-md-12">
-    <fa name="plus" *ngIf="!showManualContext" class="float-right" (click)="toggleContextView()"></fa>
-    <fa name="minus" *ngIf="showManualContext" class="float-right" (click)="toggleContextView()"></fa>
+    <!-- <fa name="plus" *ngIf="!showManualContext" class="float-right" (click)="toggleContextView()"></fa> -->
+    <i class="fa fa-plus" aria-hidden="true" *ngIf="!showManualContext" class="float-right" (click)="toggleContextView()"></i>
+    <!-- <fa name="minus" *ngIf="showManualContext" class="float-right" (click)="toggleContextView()"></fa> -->
+    <i class="fa fa-minus" aria-hidden="true" *ngIf="showManualContext" class="float-right" (click)="toggleContextView()"></i>
   </div>
 </div>
 

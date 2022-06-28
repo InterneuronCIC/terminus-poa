@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, Element
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { isArray } from 'util';
+// import { isArray } from 'util';
 import { action, DataContract, filter, filterparam, filterParams, filters, orderbystatement, selectstatement } from './models/filter.model';
 import { ApirequestService } from './services/apirequest.service';
 import { AppService } from './services/app.service';
@@ -181,7 +181,7 @@ export class AppComponent implements OnInit{
     if (this.appService.apiService) {
       decodedToken = this.appService.decodeAccessToken(this.appService.apiService.authService.user.access_token);
       if (decodedToken != null)
-        this.appService.loggedInUserName = decodedToken.name ? (isArray(decodedToken.name) ? decodedToken.name[0] : decodedToken.name) : decodedToken.IPUId;
+        this.appService.loggedInUserName = decodedToken.name ? (Array.isArray(decodedToken.name) ? decodedToken.name[0] : decodedToken.name) : decodedToken.IPUId;
 
     }
     await this.subscriptions.add(this.apiRequest.getRequest("./assets/config/terminus-poa-config.json?V" + Math.random()).subscribe(
@@ -281,7 +281,7 @@ export class AppComponent implements OnInit{
       synapseroles = decodedToken.SynapseRoles
     else
       synapseroles = decodedToken.client_SynapseRoles
-    if (!isArray(synapseroles)) {
+    if (!Array.isArray(synapseroles)) {
       condition = "rolename = @rolename";
       pm.filterparams.push(new filterparam("rolename", synapseroles));
     }

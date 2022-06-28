@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 <!--END LICENSE BLOCK--> 
 <button class="btn btn-info text-white" (click)="cancel()">
-  <fa name="arrow-left"></fa> Return to assessments
+  <i class="fa fa-arrow-left"></i> Return to assessments
 </button>
 
 
@@ -32,7 +32,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
       <div class="col-md-6">
         <h5>
           <span *ngIf="appService.lockedOrBlocked">
-            <fa name="lock" class="text-info"></fa> &nbsp;
+            <i class="fa fa-lock text-info"></i>> &nbsp;
           </span>
           AKI Assessment
         </h5>
@@ -41,11 +41,11 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
       <div class="col-md-6">
         <button class="btn btn-info float-right text-white" (click)="viewHistory()"
           style="margin-left: 7px; margin-right: 7px;">
-          <fa name="check-square"></fa> Audit
+          <i class="fa fa-check-square" aria-hidden="true"></i> Audit
         </button>
         <button class="btn btn-info float-right text-white" (click)="viewPrevious()"
           *ngIf="!appService.lockedOrBlocked">
-          <fa name="clock-o"></fa> Previous POAs
+          <i class="fa fa-clock-o" aria-hidden="true"></i> Previous POAs
         </button>
       </div>
     </div>
@@ -72,7 +72,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
   <div class="row">
     <div class="col-md-12">
       <button class="btn btn-secondary btn-sm text-white" (click)="cancel()">
-        <fa name="arrow-left"></fa> Return to assessments
+        <i class="fa fa-arrow-left"></i> Return to assessments
       </button>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,31 +22,31 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
   <div class="row">
     <div class="col-md-2">
       <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-        <fa name="arrow-left"></fa> Back
+        <i class="fa fa-arrow-left"></i> Back
       </button>
     </div>
     <div class="col-md-2">
       <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-        <fa name="bars"></fa> Main menu
+        <i class="fa fa-bars"></i> Main menu
       </button>
     </div>
     <div class="col-md-6">
       <div *ngIf="selectedPOA && !appService.blocked">
         <div *ngIf="selectedPOA.iscompletednursingassessment">
           <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
-            <fa name="check"></fa> Click here to remove Completed status
+            <i class="fa fa-check" aria-hidden="true"></i> Click here to remove Completed status
           </button>
         </div>
         <div *ngIf="!selectedPOA.iscompletednursingassessment">
           <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
-            <fa name="times"></fa> Click here to show Completed status
+            <i class="fa fa-times" aria-hidden="true"></i> Click here to show Completed status
           </button>
         </div>
       </div>
     </div>
     <div class="col-md-2">
       <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-        Next <fa name="arrow-right"></fa>
+        Next <i class="fa fa-arrow-right"></i>
       </button>
     </div>
   </div>
@@ -61,7 +61,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
       <div class="col-md-6">
         <h4 class="text-dark">
           <span *ngIf="appService.lockedOrBlocked">
-            <fa name="lock" class="text-info"></fa> &nbsp;
+            <i class="fa fa-lock text-info"></i>> &nbsp;
           </span>
           Fitness Outcome
         </h4>
@@ -74,12 +74,12 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div class="col-md-4">
             <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewPrevious()"
               *ngIf="!appService.lockedOrBlocked">
-              <fa name="clock-o"></fa> Previous POAs
+              <i class="fa fa-clock-o" aria-hidden="true"></i> Previous POAs
             </button>
           </div>
           <div class="col-md-4">
             <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewHistory()">
-              <fa name="check-square"></fa> Audit
+              <i class="fa fa-check-square" aria-hidden="true"></i> Audit
             </button>
           </div>
         </div>
@@ -118,31 +118,31 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
   <div class="row">
     <div class="col-md-2">
       <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-        <fa name="arrow-left"></fa> Back
+        <i class="fa fa-arrow-left"></i> Back
       </button>
     </div>
     <div class="col-md-2">
       <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-        <fa name="bars"></fa> Main menu
+        <i class="fa fa-bars"></i> Main menu
       </button>
     </div>
     <div class="col-md-6">
       <div *ngIf="selectedPOA && !appService.blocked">
         <div *ngIf="selectedPOA.iscompletednursingassessment">
           <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
-            <fa name="check"></fa> Click here to remove Completed status
+            <i class="fa fa-check" aria-hidden="true"></i> Click here to remove Completed status
           </button>
         </div>
         <div *ngIf="!selectedPOA.iscompletednursingassessment">
           <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
-            <fa name="times"></fa> Click here to show Completed status
+            <i class="fa fa-times" aria-hidden="true"></i> Click here to show Completed status
           </button>
         </div>
       </div>
     </div>
     <div class="col-md-2">
       <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-        Next <fa name="arrow-right"></fa>
+        Next <i class="fa fa-arrow-right"></i>
       </button>
     </div>
   </div>

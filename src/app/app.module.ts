@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ import { FakeDataContractComponent } from './fake-data-contract/fake-data-contra
 import { DataTablesModule } from 'angular-datatables';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+// import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { PersonIdentifiersComponent } from './person-identifiers/person-identifiers.component';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
@@ -92,88 +92,86 @@ import { PrintViewComponent } from './print-view/print-view.component';
 //import { AutoCompleteValidationDirective } from "./utilities/auto-complete-validation";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ViewerComponent,
-    FakeDataContractComponent,
-    PersonIdentifiersComponent,
-    DynamicFormRendererComponent,
-    IdentifierTransformPipe,
-    HomeComponent,
-    AllergiesComponent,
-    PastMedicalHistoryComponent,
-    MedicineHistoryComponent,
-    ModuleLoaderDirective,
-    SurgicalHistoryComponent,
-    PhysicalExaminationComponent,
-    FamilyHistoryComponent,
-    SocialHistoryComponent,
-    InfectionControlComponent,
-    InformationProvidedComponent,
-    NursingAssessmentComponent,
-    BaselineObservationsComponent,
-    CurrentMedicationsComponent,
-    NotesComponent,
-    TasksComponent,
-    AssessmentsComponent,
-    AssessmentAKIComponent,
-    AssessmentSORTComponent,
-    AssessmentFrailtyComponent,
-    AssessmentCognitiveComponent,
-    AssessmentAdultMalnutritionComponent,
-    GeneralComponent,
-    CalendarComponent,
-    LinebreaksPipe,
-    ConfirmationDialogComponent,
-    FormioHistoryViewerComponent,
-    FormioImportComponent,
-    GeneralHistoryViewerComponent,
-    AllergyLookupDescriptionsComponent,
-    AllergyHistoryViewerComponent,
-    TaskHistoryViewerComponent,
-    PrintViewComponent
-    // ,
-    // ConfirmationDialogService
-  ],
-  imports: [
-    QuillModule.forRoot(),
-    FormioModule,
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-    }),
-    AngularFontAwesomeModule,
-    BrowserAnimationsModule,
-    NgxSpinnerModule,
-    DataTablesModule,
-    BrowserModule,
-    ModalModule.forRoot(),
-    HttpClientModule,
-    FormsModule,
-    NgbModule,
-    BsDatepickerModule.forRoot(),
-    PopoverModule.forRoot(),
-    AutoCompleteModule,
-    NgMultiSelectDropDownModule.forRoot()
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [BsModalRef, BsModalService, { provide: FormioAppConfig, useValue: AppConfig }, BsDatepickerConfig, ConfirmationDialogService, FormioHistoryService, FormioImportService, GeneralHistoryViewerService, AllergyLookupDescriptionsService, AllergyHistoryViewerService, TaskHistoryViewerService],
-  //bootstrap: [AppComponent],  //Comment out when running build command for packaging
-  bootstrap: [],  //Keep for prod build
-
-  entryComponents: [
-    AppComponent,
-    ConfirmationDialogComponent,
-    FormioHistoryViewerComponent,
-    FormioImportComponent,
-    GeneralHistoryViewerComponent,
-    AllergyLookupDescriptionsComponent,
-    AllergyHistoryViewerComponent,
-    TaskHistoryViewerComponent
-  ]
-
-})
+    declarations: [
+        AppComponent,
+        ViewerComponent,
+        FakeDataContractComponent,
+        PersonIdentifiersComponent,
+        DynamicFormRendererComponent,
+        IdentifierTransformPipe,
+        HomeComponent,
+        AllergiesComponent,
+        PastMedicalHistoryComponent,
+        MedicineHistoryComponent,
+        ModuleLoaderDirective,
+        SurgicalHistoryComponent,
+        PhysicalExaminationComponent,
+        FamilyHistoryComponent,
+        SocialHistoryComponent,
+        InfectionControlComponent,
+        InformationProvidedComponent,
+        NursingAssessmentComponent,
+        BaselineObservationsComponent,
+        CurrentMedicationsComponent,
+        NotesComponent,
+        TasksComponent,
+        AssessmentsComponent,
+        AssessmentAKIComponent,
+        AssessmentSORTComponent,
+        AssessmentFrailtyComponent,
+        AssessmentCognitiveComponent,
+        AssessmentAdultMalnutritionComponent,
+        GeneralComponent,
+        CalendarComponent,
+        LinebreaksPipe,
+        ConfirmationDialogComponent,
+        FormioHistoryViewerComponent,
+        FormioImportComponent,
+        GeneralHistoryViewerComponent,
+        AllergyLookupDescriptionsComponent,
+        AllergyHistoryViewerComponent,
+        TaskHistoryViewerComponent,
+        PrintViewComponent
+        // ,
+        // ConfirmationDialogService
+    ],
+    imports: [
+        QuillModule.forRoot(),
+        FormioModule,
+        ToastrModule.forRoot({
+            timeOut: 10000,
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+        }),
+        // AngularFontAwesomeModule,
+        BrowserAnimationsModule,
+        NgxSpinnerModule,
+        DataTablesModule,
+        BrowserModule,
+        ModalModule.forRoot(),
+        HttpClientModule,
+        FormsModule,
+        NgbModule,
+        BsDatepickerModule.forRoot(),
+        PopoverModule.forRoot(),
+        AutoCompleteModule,
+        NgMultiSelectDropDownModule.forRoot()
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    providers: [BsModalRef, BsModalService, { provide: FormioAppConfig, useValue: AppConfig }, BsDatepickerConfig, ConfirmationDialogService, FormioHistoryService, FormioImportService, GeneralHistoryViewerService, AllergyLookupDescriptionsService, AllergyHistoryViewerService, TaskHistoryViewerService],
+    //bootstrap: [AppComponent],  //Comment out when running build command for packaging
+    bootstrap: [],
+    entryComponents: [
+      AppComponent,
+      ConfirmationDialogComponent,
+      FormioHistoryViewerComponent,
+      FormioImportComponent,
+      GeneralHistoryViewerComponent,
+      AllergyLookupDescriptionsComponent,
+      AllergyHistoryViewerComponent,
+      TaskHistoryViewerComponent
+    ]
+  })
 export class AppModule implements DoBootstrap {
   constructor(private injector: Injector) {
 

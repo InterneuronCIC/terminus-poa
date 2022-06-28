@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ export class CalendarComponent implements OnInit {
 
   model: any;
   //date: { year: number, month: number, day: number };
-  @ViewChild('dp',null) dp: NgbDatepicker;
+  @ViewChild('dp') dp: NgbDatepicker;
 
 
   constructor( private ngbCalendar: NgbCalendar, private dateAdapter: NgbDateAdapter<string>,  ) {

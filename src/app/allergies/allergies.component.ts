@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -42,11 +42,11 @@ import { AllergyVerificationStatus } from '../models/entities/allergy-verificati
 import { Guid } from 'guid-typescript';
 import { ConfirmationDialogService } from '../confirmation-dialog/confirmation-dialog.service';
 import { AllergyReportedByGroup } from '../models/entities/allergy-reported-by-group';
-import { ThrowStmt } from '@angular/compiler';
-import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
+// import { ThrowStmt } from '@angular/compiler';
+// import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 import { SNOMED } from '../models/snomed-model';
 import { TerminologyConcept } from '../models/terminology-concept';
-import { escapeRegExp } from '@angular/compiler/src/util';
+// import { escapeRegExp } from '@angular/compiler/src/util';
 import { AllergyLookupDescriptionsService } from '../allergy-lookup-descriptions/allergy-lookup-descriptions.service';
 import { AllergyHistoryViewerService } from '../allergy-history-viewer/allergy-history-viewer.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -890,7 +890,11 @@ get ActiveNotAbleToAscertainRecorded(): boolean{
     if(!str) {
       return null;
     }
-    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    return str.replace(new RegExp(this.escapeRegex(find), 'g'), replace);
+  }
+
+  escapeRegex(string) {
+    return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
   }
 
 

@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ import { formatDate } from '@angular/common';
 import { ConfirmationDialogService } from '../confirmation-dialog/confirmation-dialog.service';
 import { GeneralHistoryViewerService } from '../general-history-viewer/general-history-viewer.service';
 import { TaskAutomationService } from '../services/taskautomation.service'
-import { ThrowStmt } from '@angular/compiler';
+// import { ThrowStmt } from '@angular/compiler';
 import { LinkedEncounter } from '../models/baseviews/linked-encounter';
 import { ScheduledOperation } from '../models/baseviews/scheduled-operation';
 

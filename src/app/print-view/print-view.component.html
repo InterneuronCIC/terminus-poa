@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-          <fa name="arrow-left"></fa> Back
+          <i class="fa fa-arrow-left"></i> Back
         </button>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-          <fa name="bars"></fa> Main menu
+          <i class="fa fa-bars"></i> Main menu
         </button>
       </div>
       <div class="col-md-6">
@@ -38,7 +38,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
       </div>
       <div class="col-md-2">
         <!-- <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-          Next <fa name="arrow-right"></fa>
+          Next <i class="fa fa-arrow-right"></i>
         </button> -->
       </div>
     </div>
@@ -50,7 +50,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
       <div class="row">
         <div class="col-md-6">
           <h4 class="text-dark">
-            <fa name="print"></fa>
+            <i class="fa fa-print" aria-hidden="true"></i>
             Print View
           </h4>
         </div>
@@ -59,8 +59,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
             <div class="col-md-4">
               <div *ngIf="selectedPOA && !appService.blocked">
                 <div *ngIf="selectedPOA.isprinted">
-                  <button class="btn btn-sm btn-outline-success btn-block " (click)="markPrinted(false)">Printed <fa
-                      name="print"></fa></button>
+                  <button class="btn btn-sm btn-outline-success btn-block " (click)="markPrinted(false)">Printed <i class="fa fa-print" aria-hidden="true"></i></button>
                 </div>
                 <div *ngIf="!selectedPOA.isprinted">
                   <button class="btn btn-sm btn-outline-danger btn-block" (click)="markPrinted(true)">Mark as
@@ -70,12 +69,13 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
             </div>
             <div class="col-md-4">
               <button class="btn bg-white text-dark border-dark btn-sm btn-block" (click)="expandAllSections()">
-                <fa name="plus"></fa> All
+                <i class="fa fa-plus" aria-hidden="true"></i> All
               </button>
             </div>
             <div class="col-md-4">
               <button class="btn bg-white text-dark border-dark btn-sm btn-block" (click)="collapseAllSections()">
-                <fa name="minus"></fa> All
+                <!-- <fa name="minus"></fa> -->
+                <i class="fa fa-minus" aria-hidden="true"></i> All
               </button>
             </div>
           </div>
@@ -86,7 +86,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     <div class="card-body">
       <div *ngIf="selectedPOA" style="margin-top: -15px;">
         <span *ngIf="selectedPOA.isprinted" class="text-success">
-          <fa name="print"></fa> Printed on
+          <i class="fa fa-print" aria-hidden="true"></i> Printed on
           <!-- {{selectedPOA.reviewedbypharmacistdate }} -->
           {{selectedPOA.printeddate | date:'dd/MM/yyyy HH:mma'}}
           ({{selectedPOA.printeduser}})
@@ -156,7 +156,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     </div>
     <div class="col-md-6" style="text-align: right;">
       <button class="btn bg-white text-dark border-dark btn-sm" (click)="expandAllSections()">
-        <fa name="plus"></fa> All
+        <i class="fa fa-plus" aria-hidden="true"></i> All
       </button>
       &nbsp;
       <button class="btn bg-white text-dark border-dark btn-sm" (click)="collapseAllSections()">
@@ -179,8 +179,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideGeneral"></fa>
-              <fa name="minus" *ngIf="showHideGeneral"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideGeneral"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideGeneral"></i>
+              <!-- <fa name="minus" *ngIf="showHideGeneral"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideGeneral"></i>
             </button>
           </div>
         </div>
@@ -467,8 +469,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHidePastMedicalHistory"></fa>
-              <fa name="minus" *ngIf="showHidePastMedicalHistory"></fa>
+              <!-- <fa name="plus" *ngIf="!showHidePastMedicalHistory"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHidePastMedicalHistory"></i>
+              <!-- <fa name="minus" *ngIf="showHidePastMedicalHistory"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHidePastMedicalHistory"></i>
             </button>
           </div>
         </div>
@@ -492,8 +496,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideTasks"></fa>
-              <fa name="minus" *ngIf="showHideTasks"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideTasks"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideTasks"></i>
+              <!-- <fa name="minus" *ngIf="showHideTasks"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideTasks"></i>
             </button>
           </div>
         </div>
@@ -518,22 +524,22 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                   <strong>Status</strong><br />
                   <span *ngIf="opt.poa_taskstatus_id == 'Completed'">
                     <span class="text-success">
-                      <fa name="check"></fa>
+                      <i class="fa fa-check" aria-hidden="true"></i>
                     </span>
                   </span>
                   <span *ngIf="opt.poa_taskstatus_id == 'Cancelled'">
                     <span class="text-danger">
-                      <fa name="times-circle-o"></fa>
+                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                     </span>
                   </span>
                   <span *ngIf="opt.poa_taskstatus_id == 'Rejected'">
                     <span class="text-danger">
-                      <fa name="times-circle-o"></fa>
+                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                     </span>
                   </span>
                   <span *ngIf="opt.poa_taskstatus_id == 'In progress'">
                     <span class="text-info">
-                      <fa name="cogs"></fa>
+                      <i class="fa fa-cogs" aria-hidden="true"></i>
                     </span>
                   </span>
 
@@ -569,8 +575,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideBaselineObservations"></fa>
-              <fa name="minus" *ngIf="showHideBaselineObservations"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideBaselineObservations"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideBaselineObservations"></i>
+              <!-- <fa name="minus" *ngIf="showHideBaselineObservations"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideBaselineObservations"></i>
             </button>
           </div>
         </div>
@@ -595,8 +603,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideAllergies"></fa>
-              <fa name="minus" *ngIf="showHideAllergies"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideAllergies"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideAllergies"></i>
+              <!-- <fa name="minus" *ngIf="showHideAllergies"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideAllergies"></i>
             </button>
           </div>
         </div>
@@ -631,10 +641,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                       <div *ngIf="opt.clinicalstatusvalue != 'Active'" class="border rounded bg-light"
                         style="padding: 5px; font-weight: bold;">
                         <span *ngIf="opt.causativeagentcodesystem == 'NON-ALLERGY'">
-                          <fa name="flag"></fa> &nbsp;
+                          <i class="fa fa-flag" aria-hidden="true"></i> &nbsp;
                         </span>
                         <span *ngIf="opt.causativeagentcodesystem != 'NON-ALLERGY'">
-                          <fa name="exclamation-triangle"></fa> &nbsp;
+                          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> &nbsp;
                         </span>
                         {{opt.causativeagentdescription}}
                       </div>
@@ -645,10 +655,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                                 'border rounded bg-info text-white' : opt.causativeagentcodesystem != 'NON-ALLERGY'
                               }" style="padding: 5px; font-weight: bold;">
                         <span *ngIf="opt.causativeagentcodesystem == 'NON-ALLERGY'">
-                          <fa name="flag"></fa> &nbsp;
+                          <i class="fa fa-flag" aria-hidden="true"></i> &nbsp;
                         </span>
                         <span *ngIf="opt.causativeagentcodesystem != 'NON-ALLERGY'">
-                          <fa name="exclamation-triangle"></fa> &nbsp;
+                          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> &nbsp;
                         </span>
                         {{opt.causativeagentdescription}}
                       </div>
@@ -717,8 +727,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideAssessments"></fa>
-              <fa name="minus" *ngIf="showHideAssessments"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideAssessments"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideAssessments"></i>
+              <!-- <fa name="minus" *ngIf="showHideAssessments"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideAssessments"></i>
             </button>
           </div>
         </div>
@@ -870,7 +882,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 
                       <div *ngFor="let item of kvp | keyvalue">
                         <div *ngIf="item.value">
-                          <fa name="check"></fa> {{item.key}}
+                          <i class="fa fa-check" aria-hidden="true"></i> {{item.key}}
                         </div>
                       </div>
 
@@ -998,8 +1010,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideMedicationHistory"></fa>
-              <fa name="minus" *ngIf="showHideMedicationHistory"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideMedicationHistory"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideMedicationHistory"></i>
+              <!-- <fa name="minus" *ngIf="showHideMedicationHistory"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideMedicationHistory"></i>
             </button>
           </div>
         </div>
@@ -1023,8 +1037,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideSurgicalHistory"></fa>
-              <fa name="minus" *ngIf="showHideSurgicalHistory"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideSurgicalHistory"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideSurgicalHistory"></i>
+              <!-- <fa name="minus" *ngIf="showHideSurgicalHistory"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideSurgicalHistory"></i>
             </button>
           </div>
         </div>
@@ -1050,8 +1066,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHidePhysicalExamination"></fa>
-              <fa name="minus" *ngIf="showHidePhysicalExamination"></fa>
+              <!-- <fa name="plus" *ngIf="!showHidePhysicalExamination"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHidePhysicalExamination"></i>
+              <!-- <fa name="minus" *ngIf="showHidePhysicalExamination"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHidePhysicalExamination"></i>
             </button>
           </div>
         </div>
@@ -1075,8 +1093,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideFamilyHistory"></fa>
-              <fa name="minus" *ngIf="showHideFamilyHistory"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideFamilyHistory"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideFamilyHistory"></i>
+              <!-- <fa name="minus" *ngIf="showHideFamilyHistory"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideFamilyHistory"></i>
             </button>
           </div>
         </div>
@@ -1100,8 +1120,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideSocialHistory"></fa>
-              <fa name="minus" *ngIf="showHideSocialHistory"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideSocialHistory"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideSocialHistory"></i>
+              <!-- <fa name="minus" *ngIf="showHideSocialHistory"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideSocialHistory"></i>
             </button>
           </div>
         </div>
@@ -1125,8 +1147,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideInfectionControl"></fa>
-              <fa name="minus" *ngIf="showHideInfectionControl"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideInfectionControl"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideInfectionControl"></i>
+              <!-- <fa name="minus" *ngIf="showHideInfectionControl"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideInfectionControl"></i>
             </button>
           </div>
         </div>
@@ -1150,8 +1174,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideInformationProvided"></fa>
-              <fa name="minus" *ngIf="showHideInformationProvided"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideInformationProvided"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideInformationProvided"></i>
+              <!-- <fa name="minus" *ngIf="showHideInformationProvided"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideInformationProvided"></i>
             </button>
           </div>
         </div>
@@ -1175,8 +1201,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideFitnessOutcome"></fa>
-              <fa name="minus" *ngIf="showHideFitnessOutcome"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideFitnessOutcome"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideFitnessOutcome"></i>
+              <!-- <fa name="minus" *ngIf="showHideFitnessOutcome"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true"  *ngIf="showHideFitnessOutcome"></i>
             </button>
           </div>
         </div>
@@ -1200,8 +1228,10 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           </div>
           <div class="col-md-2">
             <button class="btn btn-link text-dark float-right">
-              <fa name="plus" *ngIf="!showHideNotes"></fa>
-              <fa name="minus" *ngIf="showHideNotes"></fa>
+              <!-- <fa name="plus" *ngIf="!showHideNotes"></fa> -->
+              <i class="fa fa-plus" aria-hidden="true" *ngIf="!showHideNotes"></i>
+              <!-- <fa name="minus" *ngIf="showHideNotes"></fa> -->
+              <i class="fa fa-minus" aria-hidden="true" *ngIf="showHideNotes"></i>
             </button>
           </div>
         </div>
@@ -1242,7 +1272,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
   <div class="row">
     <div class="col-md-12">
       <button class="btn btn-secondary btn-sm text-white" (click)="cancel()">
-        <fa name="arrow-left"></fa> Return to main menu
+        <i class="fa fa-arrow-left"></i> Return to main menu
       </button>
     </div>
   </div> -->
@@ -1258,31 +1288,31 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-          <fa name="arrow-left"></fa> Back
+          <i class="fa fa-arrow-left"></i> Back
         </button>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-          <fa name="bars"></fa> Main menu
+          <i class="fa fa-bars"></i> Main menu
         </button>
       </div>
       <div class="col-md-6">
         <!-- <div *ngIf="selectedPOA && !appService.blocked">
           <div *ngIf="selectedPOA.iscompletedgeneral">
             <button class="btn btn-block btn-sm btn-success btn-block float-right" (click)="markSectionCompleted(false)">
-              <fa name="check"></fa> Click here to remove Completed status
+              <i class="fa fa-check" aria-hidden="true"></i> Click here to remove Completed status
             </button>
           </div>
           <div *ngIf="!selectedPOA.iscompletedgeneral">
             <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
-              <fa name="times"></fa> Click here to show Completed status
+              <i class="fa fa-times" aria-hidden="true"></i> Click here to show Completed status
             </button>
           </div>
         </div> -->
       </div>
       <div class="col-md-2">
         <!-- <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-          Next <fa name="arrow-right"></fa>
+          Next <i class="fa fa-arrow-right"></i>
         </button> -->
       </div>
     </div>

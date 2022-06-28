@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -19,8 +19,8 @@
 //along with this program.If not, see<http://www.gnu.org/licenses/>.
 //END LICENSE BLOCK 
 import { HttpClient } from '@angular/common/http';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { escapeRegExp } from '@angular/compiler/src/util';
+// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { escapeRegExp } from '@angular/compiler/src/util';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormioForm, FormioOptions } from 'angular-formio';
@@ -308,7 +308,11 @@ export class AllergyHistoryViewerComponent implements OnInit {
     if(!str) {
       return null;
     }
-    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    return str.replace(new RegExp(this.escapeRegex(find), 'g'), replace);
+  }
+
+  escapeRegex(string) {
+    return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
   }
 
 

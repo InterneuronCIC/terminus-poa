@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,12 +32,12 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-          <fa name="arrow-left"></fa> Back
+          <i class="fa fa-arrow-left"></i> Back
         </button>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-          <fa name="bars"></fa> Main menu
+          <i class="fa fa-bars"></i> Main menu
         </button>
       </div>
       <div class="col-md-6">
@@ -45,19 +45,19 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div *ngIf="selectedPOA.iscompletedmedicationhistory">
             <button class="btn btn-block btn-sm btn-success btn-block float-right"
               (click)="markSectionCompleted(false)">
-              <fa name="check"></fa> Click here to remove Completed status
+              <i class="fa fa-check" aria-hidden="true"></i> Click here to remove Completed status
             </button>
           </div>
           <div *ngIf="!selectedPOA.iscompletedmedicationhistory">
             <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
-              <fa name="times"></fa> Click here to show Completed status
+              <i class="fa fa-times" aria-hidden="true"></i> Click here to show Completed status
             </button>
           </div>
         </div>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-          Next <fa name="arrow-right"></fa>
+          Next <i class="fa fa-arrow-right"></i>
         </button>
       </div>
     </div>
@@ -70,7 +70,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <div class="col-md-4">
           <h5>
             <span *ngIf="appService.lockedOrBlocked">
-              <fa name="lock" class="text-info"></fa> &nbsp;
+              <i class="fa fa-lock text-info"></i>> &nbsp;
             </span>
             Medications List
           </h5>
@@ -82,7 +82,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div *ngIf="selectedPOA">
             <div *ngIf="selectedPOA.reviewedbypharmacist">
               <button class="btn btn-sm btn-success btn-block text-white float-right"
-                (click)="markReviewed(false)">Reviewed by POA Pharmacist <fa name="check-square-o"></fa></button>
+                (click)="markReviewed(false)">Reviewed by POA Pharmacist <i class="fa fa-check-square-o" aria-hidden="true"></i></button>
             </div>
             <div *ngIf="!selectedPOA.reviewedbypharmacist">
               <button class="btn btn-sm btn-danger btn-block text-white float-right" (click)="markReviewed(true)">Not
@@ -136,7 +136,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <div class="col-md-4">
           <h4 class="text-dark">
             <span *ngIf="appService.lockedOrBlocked">
-              <fa name="lock" class="text-info"></fa> &nbsp;
+              <i class="fa fa-lock text-info"></i>> &nbsp;
             </span>
             Medication History
           </h4>
@@ -147,7 +147,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
               <div *ngIf="selectedPOA">
                 <div *ngIf="selectedPOA.reviewedbypharmacist">
                   <button class="btn btn-sm btn-outline-success btn-block " (click)="markReviewed(false)">Reviewed
-                    by Pharmacy <fa name="check-square-o"></fa></button>
+                    by Pharmacy <i class="fa fa-check-square-o" aria-hidden="true"></i></button>
                 </div>
                 <div *ngIf="!selectedPOA.reviewedbypharmacist">
                   <button class="btn btn-sm btn-outline-danger btn-block" (click)="markReviewed(true)">Not
@@ -158,12 +158,12 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
             <div class="col-md-4">
               <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewPrevious()"
                 *ngIf="!appService.lockedOrBlocked">
-                <fa name="clock-o"></fa> Previous POAs
+                <i class="fa fa-clock-o" aria-hidden="true"></i> Previous POAs
               </button>
             </div>
             <div class="col-md-3">
               <button class="btn btn-block btn-outline-dark btn-sm" (click)="viewHistory()">
-                <fa name="check-square"></fa> Audit
+                <i class="fa fa-check-square" aria-hidden="true"></i> Audit
               </button>
             </div>
           </div>
@@ -182,7 +182,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 
       <div *ngIf="selectedPOA" style="margin-top: -15px;">
         <span *ngIf="selectedPOA.reviewedbypharmacist" class="text-success">
-          <fa name="check-square-o"></fa> Reviewed on
+          <i class="fa fa-check-square-o" aria-hidden="true"></i> Reviewed on
           <!-- {{selectedPOA.reviewedbypharmacistdate }} -->
           {{selectedPOA.reviewedbypharmacistdate | date:'dd/MM/yyyy HH:mma'}}
           ({{selectedPOA.reviewedbypharmacistuser}})
@@ -226,12 +226,12 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-          <fa name="arrow-left"></fa> Back
+          <i class="fa fa-arrow-left"></i> Back
         </button>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-          <fa name="bars"></fa> Main menu
+          <i class="fa fa-bars"></i> Main menu
         </button>
       </div>
       <div class="col-md-6">
@@ -239,19 +239,19 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div *ngIf="selectedPOA.iscompletedmedicationhistory">
             <button class="btn btn-block btn-sm btn-success btn-block float-right"
               (click)="markSectionCompleted(false)">
-              <fa name="check"></fa> Click here to remove Completed status
+              <i class="fa fa-check" aria-hidden="true"></i> Click here to remove Completed status
             </button>
           </div>
           <div *ngIf="!selectedPOA.iscompletedmedicationhistory">
             <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
-              <fa name="times"></fa> Click here to show Completed status
+              <i class="fa fa-times" aria-hidden="true"></i> Click here to show Completed status
             </button>
           </div>
         </div>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-          Next <fa name="arrow-right"></fa>
+          Next <i class="fa fa-arrow-right"></i>
         </button>
       </div>
     </div>

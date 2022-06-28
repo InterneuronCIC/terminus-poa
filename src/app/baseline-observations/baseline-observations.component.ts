@@ -1,7 +1,7 @@
 //BEGIN LICENSE BLOCK 
 //Interneuron Terminus
 
-//Copyright(C) 2021  Interneuron CIC
+//Copyright(C) 2022  Interneuron CIC
 
 //This program is free software: you can redistribute it and/or modify
 //it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ import { ToasterService } from '../services/toaster-service.service';
 import { Observation } from '../models/entities/observation';
 import { ObservationEvent } from '../models/entities/observation-event';
 import { Console } from 'console';
-import { ThrowStmt } from '@angular/compiler';
+// import { ThrowStmt } from '@angular/compiler';
 import { ConfirmationDialogService } from '../confirmation-dialog/confirmation-dialog.service';
 import { FormioHistoryService } from '../formio-history-viewer/formio-history-viewer.service';
 import { FormioImportService } from '../formio-import/formio-import.service';

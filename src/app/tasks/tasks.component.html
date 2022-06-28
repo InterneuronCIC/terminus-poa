@@ -1,7 +1,7 @@
 <!--BEGIN LICENSE BLOCK--> 
 <!--Interneuron Terminus
 
-Copyright(C) 2021  Interneuron CIC
+Copyright(C) 2022  Interneuron CIC
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-          <fa name="arrow-left"></fa> Back
+          <i class="fa fa-arrow-left"></i> Back
         </button>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-          <fa name="bars"></fa> Main menu
+          <i class="fa fa-bars"></i> Main menu
         </button>
       </div>
       <div class="col-md-6">
@@ -38,19 +38,19 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div *ngIf="selectedPOA.iscompletedgeneral">
             <button class="btn btn-block btn-sm btn-success btn-block float-right"
               (click)="markSectionCompleted(false)">
-              <fa name="check"></fa> Click here to remove Completed status
+              <i class="fa fa-check" aria-hidden="true"></i> Click here to remove Completed status
             </button>
           </div>
           <div *ngIf="!selectedPOA.iscompletedgeneral">
             <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
-              <fa name="times"></fa> Click here to show Completed status
+              <i class="fa fa-times" aria-hidden="true"></i> Click here to show Completed status
             </button>
           </div>
         </div> -->
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-          Next <fa name="arrow-right"></fa>
+          Next <i class="fa fa-arrow-right"></i>
         </button>
       </div>
     </div>
@@ -65,7 +65,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <div class="col-md-6">
           <h4 class="text-dark">
             <span *ngIf="appService.lockedOrBlocked">
-              <fa name="lock" class="text-info"></fa> &nbsp;
+              <i class="fa fa-lock text-info"></i>> &nbsp;
             </span>
             Tasks and POA Updates
           </h4>
@@ -77,13 +77,13 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
             </div>
             <div class="col-md-4">
               <button class="btn btn-block btn-outline-dark btn-sm" (click)="refresh()" *ngIf="!appService.locked">
-                <fa name="refresh"></fa> Refresh
+                <i class="fa fa-refresh" aria-hidden="true"></i> Refresh
               </button>
             </div>
             <div class="col-md-4">
               <button class="btn btn-block btn-outline-dark btn-sm" (click)="addNew($event)"
                 *ngIf="!appService.locked">
-                <fa name="plus"></fa> Add Task
+                <i class="fa fa-plus" aria-hidden="true"></i> Add Task
               </button>
 
             </div>
@@ -147,22 +147,22 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                   <strong>Status</strong><br />
                   <span *ngIf="opt.poa_taskstatus_id == 'Completed'">
                     <span class="text-success">
-                      <fa name="check"></fa>
+                      <i class="fa fa-check" aria-hidden="true"></i>
                     </span>
                   </span>
                   <span *ngIf="opt.poa_taskstatus_id == 'Cancelled'">
                     <span class="text-danger">
-                      <fa name="times-circle-o"></fa>
+                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                     </span>
                   </span>
                   <span *ngIf="opt.poa_taskstatus_id == 'Rejected'">
                     <span class="text-danger">
-                      <fa name="times-circle-o"></fa>
+                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
                     </span>
                   </span>
                   <span *ngIf="opt.poa_taskstatus_id == 'In progress'">
                     <span class="text-info">
-                      <fa name="cogs"></fa>
+                      <i class="fa fa-cogs" aria-hidden="true"></i>
                     </span>
                   </span>
 
@@ -174,7 +174,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
                 </div> -->
                 <div class="col-md-1" style="padding-top:2px;">
                   <span class="float-right text-dark">
-                    <fa name="arrow-right"></fa>
+                    <i class="fa fa-arrow-right"></i>
                   </span>
                 </div>
               </div>
@@ -231,12 +231,12 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="back()">
-          <fa name="arrow-left"></fa> Back
+          <i class="fa fa-arrow-left"></i> Back
         </button>
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white" (click)="cancel()">
-          <fa name="bars"></fa> Main menu
+          <i class="fa fa-bars"></i> Main menu
         </button>
       </div>
       <div class="col-md-6">
@@ -244,19 +244,19 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div *ngIf="selectedPOA.iscompletedgeneral">
             <button class="btn btn-block btn-sm btn-success btn-block float-right"
               (click)="markSectionCompleted(false)">
-              <fa name="check"></fa> Click here to remove Completed status
+              <i class="fa fa-check" aria-hidden="true"></i> Click here to remove Completed status
             </button>
           </div>
           <div *ngIf="!selectedPOA.iscompletedgeneral">
             <button class="btn btn-block btn-sm btn-danger btn-block float-right" (click)="markSectionCompleted(true)">
-              <fa name="times"></fa> Click here to show Completed status
+              <i class="fa fa-times" aria-hidden="true"></i> Click here to show Completed status
             </button>
           </div>
         </div> -->
       </div>
       <div class="col-md-2">
         <button class="btn btn-block btn-info btn-sm text-white float-right" (click)="next()">
-          Next <fa name="arrow-right"></fa>
+          Next <i class="fa fa-arrow-right"></i>
         </button>
       </div>
     </div>
@@ -269,7 +269,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 
 <div *ngIf="selectedTasksView === 'new'">
   <button class="btn btn-info text-white" (click)="cancelNew()">
-    <fa name="times"></fa> Cancel
+    <i class="fa fa-times" aria-hidden="true"></i> Cancel
   </button>
   <br /><br />
 
@@ -417,7 +417,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
 <div *ngIf="selectedTasksView === 'edit'">
 
   <button class="btn btn-info text-white" (click)="cancelNew()">
-    <fa name="times"></fa> Cancel
+    <i class="fa fa-times" aria-hidden="true"></i> Cancel
   </button>
   <br /><br />
 
@@ -431,22 +431,22 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
         <div class="col-md-2" style="text-align: right;">
           <span *ngIf="selectedTask.poa_taskstatus_id == 'Completed'">
             <h5 class="text-success">
-              <fa name="check"></fa>
+              <i class="fa fa-check" aria-hidden="true"></i>
             </h5>
           </span>
           <span *ngIf="selectedTask.poa_taskstatus_id == 'Cancelled'">
             <h5 class="text-danger">
-              <fa name="times-circle-o"></fa>
+              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
             </h5>
           </span>
           <span *ngIf="selectedTask.poa_taskstatus_id == 'Rejected'">
             <h5 class="text-danger">
-              <fa name="times-circle-o"></fa>
+              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
             </h5>
           </span>
           <span *ngIf="selectedTask.poa_taskstatus_id == 'In progress'">
             <h5 class="text-info">
-              <fa name="cogs"></fa>
+              <i class="fa fa-cogs" aria-hidden="true"></i>
             </h5>
           </span>
         </div>
@@ -507,7 +507,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div class="col-md-6">
             <h5>
               <span *ngIf="appService.locked">
-                <fa name="lock" class="text-info"></fa> &nbsp;
+                <i class="fa fa-lock text-info"></i>> &nbsp;
               </span>
               Edit Task
             </h5>
@@ -515,7 +515,7 @@ along with this program.If not, see<http://www.gnu.org/licenses/>. -->
           <div class="col-md-6">
             <button class="btn btn-info float-right text-white" (click)="viewHistory()"
               style="margin-left: 7px; margin-right: 7px;">
-              <fa name="check-square"></fa> Audit
+              <i class="fa fa-check-square-o" aria-hidden="true"></i> Audit
             </button>
           </div>
         </div>
